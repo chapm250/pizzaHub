@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>Pizza Hub</title>
+    <link rel="stylesheet" href="pizza.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <script src="controller.js"></script>
+</head>
+<body ng-app="buttons">
+<h1>Pizza Hub</h1>
+<div id="buttons" ng-controller="buttonCtrl">
+
+    <div class="register" style="display: none">
+        <h3>Register New Pizza Abuser</h3>
+        <form name="addform" class="form" ng-submit="register()">
+            <div class="form-group">
+                <label>Pizza Name</label>
+                <input type="text" class="form-control" ng-model="newname" required />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="text" class="form-control" ng-model="newpassword" required />
+            </div>
+            <div class="form-group">
+                <label>Re-enter Password</label>
+                <input type="text" class="form-control" ng-model="newpassword1" required />
+            </div>
+            <div class="form-group">
+                <label>E-Mail</label>
+                <input type="text" class="form-control" ng-model="newmail" required />
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" class="form-control" ng-model="newaddress" required />
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" class="form-control" ng-model="newphone" required />
+            </div>
+            <div class="form-group">
+                <label>Credit Card Number</label>
+                <input type="text" class="form-control" ng-model="newcard" required />
+            </div>
+            <div >
+                <button > Register </button>
+            </div>
+
+
+        </form>
+
+    </div>
+
+    <div class="loggedout" style=" display: none; width:30%">
+        <h3>Log In: Enter Username and Password</h3>
+        <form name="addform" class="form" ng-submit="login()">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" ng-model="username" required />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="text" class="form-control" ng-model="password" required />
+            </div>
+            <div >
+                <button ><span ></span> Log In </button>
+            </div>
+
+
+        </form>
+
+        <div style="padding-top: 20px"><button ng-click="gotoregister()">Register</button></div>
+    </div>
+
+
+    <div class="loggedin" style="display: inline">
+        <div  style = " width: 300px; height: 100%; float: right; background-color: greenyellow" class = "pizzacart">
+            <h3>Shopping Cart</h3>
+        </div>
+
+        <div class="main" style="float: left">
+
+            <ul class = "nav nav-tabs">
+                <li class = "active" ng-click="unnamed fuction here"><a data-toggle="tab" href="#pizza">Pizza</a> </li>
+                <li><a data-toggle="tab" href="#sides">Sides</a> </li>
+                <li><a data-toggle="tab" href="#drinks">Drinks</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="pizza" class="tab-pane fade in active">
+                    <h3>Pizza Builder</h3>
+                    <div style="padding-left:50px">
+                        <ul class="nav nav-pills">
+                            <li class="active"><a data-toggle="pill" href="#sizes">Sizes&Crusts</a></li>
+                            <li><a data-toggle="pill" href="#sauces">Sauces&Cheese</a></li>
+                            <li><a data-toggle="pill" href="#toppings">Toppings</a></li>
+                        </ul>
+
+                        <h3>Current Pizza Selection</h3>
+                        <label>{{currentsizecrust}}</label>
+                        <br>
+                        <label style="padding-left: 10px">{{currentcheese}}</label>
+                        <br>
+                        <label style="padding-left: 10px">{{currentsauce}}</label>
+                        <br>
+
+                        <button style="left:100px" ng-click="addToOrder()" >Add To Cart</button>
+
+                        <div class="tab-content">
+                            <div id="sizes" class="tab-pane fade in active">
+                                <h3>Select your Size and Crust</h3>
+                                <div style="float: left; padding-left: 20px">
+                                    <h3>Thick Crust</h3>
+                                    <div class="radio" ng-click="crustSelect(10)">
+                                        <label><input type="radio"  name="size">10 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(12)">
+                                        <label><input type="radio" checked="checked" name="size">12 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(14)">
+                                        <label><input type="radio" name="size">14 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(16)">
+                                        <label><input type="radio" name="size">16 inch</label>
+                                    </div>
+                                </div>
+
+                                <div style="float: left; padding-left: 20px">
+                                    <h3>Thin Crust</h3>
+                                    <div class="radio" ng-click="crustSelect(20)">
+                                        <label><input type="radio" name="size">10 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(22)">
+                                        <label><input type="radio" name="size">12 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(24)">
+                                        <label><input type="radio" name="size">14 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(26)">
+                                        <label><input type="radio" name="size">16 inch</label>
+                                    </div>
+                                </div>
+                                <div style="float: left; padding-left: 20px">
+                                    <h3>Pan Crust</h3>
+                                    <div class="radio" ng-click="crustSelect(30)">
+                                        <label><input type="radio" name="size">10 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(32)">
+                                        <label><input type="radio" name="size">12 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(34)">
+                                        <label><input type="radio" name="size">14 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(36)">
+                                        <label><input type="radio" name="size">16 inch</label>
+                                    </div>
+                                </div>
+                                <div style="float: left; padding-left: 20px">
+                                    <h3>Deep Dish Crust</h3>
+                                    <div class="radio" ng-click="crustSelect(40)">
+                                        <label><input type="radio" name="size">10 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(42)">
+                                        <label><input type="radio" name="size">12 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(44)">
+                                        <label><input type="radio" name="size">14 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(46)">
+                                        <label><input type="radio" name="size">16 inch</label>
+                                    </div>
+                                </div>
+                                <div style="float: left; padding-left: 20px">
+                                    <h3>Glutton free Crust</h3>
+                                    <div class="radio" ng-click="crustSelect(50)">
+                                        <label><input type="radio" name="size">10 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(52)">
+                                        <label><input type="radio" name="size">12 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(54)">
+                                        <label><input type="radio" name="size">14 inch</label>
+                                    </div>
+                                    <div class="radio" ng-click="crustSelect(56)">
+                                        <label><input type="radio" name="size">16 inch</label>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div id="sauces" class="tab-pane fade">
+                                <h3>Select your Sauce and Cheese</h3>
+                                <div style="float: left">
+
+                                    <h4>Choose your Sauce</h4>
+                                    <div class="radio" ng-click="sauceSelect('Tomato Sauce')">
+                                        <label><input type="radio"  checked="checked" name="sauce">Tomato</label>
+                                    </div>
+                                    <div class="radio" ng-click="sauceSelect('Marinara Sauce')">
+                                        <label><input type="radio"  name="sauce">Marinara</label>
+                                    </div>
+                                    <div class="radio" ng-click="sauceSelect('BBQ Sauce')">
+                                        <label><input type="radio" name="sauce">BBQ</label>
+                                    </div>
+                                    <div class="radio" ng-click="sauceSelect('Parmesan Sauce')">
+                                        <label><input type="radio" name="sauce">Parmesan</label>
+                                    </div>
+                                    <div class="radio" ng-click="sauceSelect('Alfredo Sauce')">
+                                        <label><input type="radio" name="sauce">Alfredo</label>
+                                    </div>
+                                    <div class="radio" ng-click="sauceSelect('Siracha Sauce')">
+                                        <label><input type="radio" name="sauce">Siracha</label>
+                                    </div>
+                                    <div class="radio" ng-click="sauceSelect('Buffalo Sauce')">
+                                        <label><input type="radio" name="sauce">Buffalo</label>
+                                    </div>
+                                    <div class="radio" ng-click="sauceSelect('No Sauce')">
+                                        <label><input type="radio" name="sauce">None</label>
+                                    </div>
+
+                                </div>
+
+                                <div style="float: left; padding-left: 50px">
+                                    <h4>Choose your Main Cheese</h4>
+                                    <div class="radio" ng-click="cheeseSelect('Mozzarella Cheese')">
+                                        <label><input type="radio"  checked="checked" name="cheese">Mozzarella</label>
+                                    </div>
+                                    <div class="radio" ng-click="cheeseSelect('Cheddar Cheese')">
+                                        <label><input type="radio"  name="cheese">Cheddar</label>
+                                    </div>
+                                    <div class="radio" ng-click="cheeseSelect('Provolone Cheese')">
+                                        <label><input type="radio" name="cheese">Provolone</label>
+                                    </div>
+                                    <div class="radio" ng-click="cheeseSelect('I FUCKING HATE CHEESE WHY WOULD I HAVE THAT ON MY PIZZA')">
+                                        <label><input type="radio" name="cheese">None</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="toppings" class="tab-pane fade">
+                                <h3>Select your toppings</h3>
+                                <div style="float: left; padding-left: 20px">
+                                    <h3>Meaty toppings ;)</h3>
+                                    <div ng-repeat="meat in meatArray">
+                                    <div class="checkbox" ng-click="toppingSelect(meat.property)">
+                                        <label><input type="checkbox"  name="{{meat.property}}">{{meat.property}}</label>
+                                    </div>
+                                    </div>
+
+                                </div>
+                                <div style="float: left; padding-left: 20px">
+                                    <h3>Non Meaty toppings</h3>
+                                    <div ng-repeat="nonmeat in nonmeatArray">
+                                        <div class="checkbox" ng-click="toppingSelect(nonmeat.property)">
+                                            <label><input type="checkbox"  name="{{nonmeat.property}}">{{nonmeat.property}}</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sides" class="tab-pane fade">
+                    <h3>Sides</h3>
+                </div>
+                <div id="drinks" class="tab-pane fade">
+                    <h3>Drinks</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!--<div style="position:relative;left:10px;top:10px" class = "pSize">-->
+    <!--<div >-->
+    <!--<button class = "pizzaSizeButton"  id="small" ng-click="???" >Small</button>-->
+    <!--<button class = "pizzaSizeButton"  id="medium" ng-click="???" >Medium</button>-->
+    <!--<button class = "pizzaSizeButton"  id="large" ng-click="???" >Large</button>-->
+    <!--<button class = "pizzaSizeButton"  id="xlarge" ng-click="???" >Extra Large</button>-->
+    <!--</div>-->
+    <!--</div>-->
+
+
+
+
+</div>
+</body>
+</html>
