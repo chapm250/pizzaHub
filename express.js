@@ -3,6 +3,7 @@ var express=require('express'),
     credentials=require('./credentials.json'),
     app = express(),
     port = process.env.PORT || 1338;
+    async = require('async');
 
 credentials.host='ids'; //setup database credentials
 
@@ -62,7 +63,7 @@ app.get("/getDrank", function(req, res){
     })
 });
 
-app.get("/getSides", function(req, res){
+app.get("/getSide", function(req, res){
     var sql = 'select sidename from Josh.sides'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("we have and error:");
@@ -82,9 +83,27 @@ app.get("/register",function(req,res){
     var phone = req.param('phone');
     var card = req.param('card');
 
+
+    async.series([
+        function(callback){
+            var sql = 'select user from Josh.pizzaUsers where name=' + username;
+            connection.query(sql, function(err,rows,fields){
+                if(err){console.log("we have and error:");
+                    console.log(err);
+                } else {
+                    if (rows.length != 0){
+                        return;
+                    }
+                }
+
+            })
+        }
+
+
+    ]);
+
     var sql = 'insert into Josh.pizzausers values ("' + username + '", "' + email + '", "' + password + '", "' +
-        address + '", "' + phone + '", "' +  '", "'  + card + '")'
-    console.log(sql);
+        address + '", "' + phone + '", "' +  '", "'  + card + '")';
     connection.query(sql,  function(err, rows, fields){
         if(err){console.log("We have an error:");
             console.log(err);
@@ -92,7 +111,10 @@ app.get("/register",function(req,res){
             console.log(rows);
         res.send(err);
         }
-    })});
+    })
+
+
+});
 
 app.get("/click",function(req,res){
     var id = req.param('id');
