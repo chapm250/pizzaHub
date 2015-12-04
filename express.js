@@ -38,7 +38,7 @@ app.get("/getToppings", function(req, res){
             res.send(rows);
         }
     })
-})
+});
 
 app.get("/getSauce", function(req, res){
     var sql = 'select saucename from Josh.sauces'
@@ -49,7 +49,30 @@ app.get("/getSauce", function(req, res){
             res.send(rows);
         }
     })
-})
+});
+
+app.get("/getDrank", function(req, res){
+    var sql = 'select drinkname from Josh.Drinks'
+    connection.query(sql, function(err, rows, fields){
+        if(err){console.log("we have and error:");
+            console.log(err);
+        } else {
+            res.send(rows);
+        }
+    })
+});
+
+app.get("/getSides", function(req, res){
+    var sql = 'select sidename from Josh.sides'
+    connection.query(sql, function(err, rows, fields){
+        if(err){console.log("we have and error:");
+            console.log(err);
+        } else {
+            res.send(rows);
+        }
+    })
+});
+
 
 app.get("/register",function(req,res){
     var username = req.param('name');

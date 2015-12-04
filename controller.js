@@ -15,11 +15,11 @@ function ButtonCtrl($scope,buttonApi){
     $scope.gotoregister=gotoregister;
     $scope.register=register;
     $scope.login=login;
-    $scope.getToppings=getToppings;
+    $scope.getShit=getShit;
     $scope.toppingSelect = toppingSelect;
     //constants
-    $scope.sizecrust="12in";
-    $scope.crusttype="thin crust";
+    $scope.sizecrust="";
+    $scope.crusttype="";
     $scope.currentsizecrust="Choose your Crust";
     $scope.currentcheese="Choose your Cheese";
     $scope.currentsauce="Choose your Sauce";
@@ -37,6 +37,8 @@ function ButtonCtrl($scope,buttonApi){
     $scope.nonmeatArray=[];
     $scope.crustArray=[];
     $scope.sauceArray=[];
+    $scope.drinksArray=[];
+    $scope.sidesArray=[];
 
 
 
@@ -46,6 +48,8 @@ function ButtonCtrl($scope,buttonApi){
 
     function cheeseSelect(cheese){
        $scope.currentcheese = cheese;
+        console.log($scope.drinksArray);
+        console.log($scope.sidesArray);
     }
     function sauceSelect(sauce){
         $scope.currentsauce = sauce + " sauce";
@@ -54,7 +58,7 @@ function ButtonCtrl($scope,buttonApi){
     function crustSelect(id){
         console.log($scope.sizecrust);
                 $scope.crusttype = id;
-                $scope.currentsizecrust = $scope.sizecrust +" "+ id;
+                $scope.currentsizecrust = $scope.sizecrust;
 
     }
 
@@ -92,7 +96,7 @@ function ButtonCtrl($scope,buttonApi){
         return loading;
     }
 
-    function getToppings(){
+    function getShit(){
         loading = true;
         buttonApi.getToppings()
             .success(function(data){
@@ -109,7 +113,7 @@ function ButtonCtrl($scope,buttonApi){
                 }
                 loading = false;
             }
-        )
+        );
 
         buttonApi.getSauce()
             .success(function(data){
@@ -120,9 +124,24 @@ function ButtonCtrl($scope,buttonApi){
                 loading = false;
             }
         )
-            .error(function() {
+        buttonApi.getDrank()
+            .success(function(data){
+                for(i = 0; i < data.length; i++) {
+                    $scope.drinksArray.push(data[i])
+
+                }
                 loading = false;
-            })
+            }
+        )
+        buttonApi.getSide()
+            .success(function(data){
+                for(i = 0; i < data.length; i++) {
+                    $scope.sidesArray.push(data[i])
+
+                }
+                loading = false;
+            }
+        )
     }
 
     function toppingSelect(toppingName){
@@ -164,6 +183,14 @@ function buttonApi($http,apiUrl){
         },
         getSauce: function(){
             var url = apiUrl+'/getSauce';
+            return $http.get(url);
+        },
+        getDrank: function(){
+            var url = apiUrl+'/getDrank';
+            return $http.get(url);
+        },
+        getSide: function(){
+            var url = apiUrl+'/getSide';
             return $http.get(url);
         }
 

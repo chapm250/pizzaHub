@@ -115,20 +115,22 @@
                         <div class="tab-content">
                             <div id="sizes" class="tab-pane fade in active">
                                 <h3>Select your Size and Crust</h3>
-                                <div ng-repeat = "crust in crustArray" >
+
+
+                                <div  ng-repeat = "crust in crustArray" >
                                     <div style="float: left; padding-left: 20px" >
                                         <h3>{{crust.property}}</h3>
                                         <div class="radio" >
-                                            <label><input ng-click="crustSelect(crust.property)" type="radio"  ng-model="sizecrust"  name="size">10 inch</label>
+                                            <label><input ng-click="crustSelect(crust.property)" type="radio"  ng-model="$parent.sizecrust" value="10in {{crust.property}}" name="size">10 inch</label>
                                         </div>
                                         <div class="radio" >
-                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="sizecrust"  name="size">12 inch</label>
+                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="$parent.sizecrust"  value="12in {{crust.property}}" name="size">12 inch</label>
                                         </div>
                                         <div class="radio" >
-                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="sizecrust"  name="size">14 inch</label>
+                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="$parent.sizecrust"  value="14in {{crust.property}}" name="size">14 inch</label>
                                         </div>
                                         <div class="radio" >
-                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="sizecrust"   name="size">16 inch</label>
+                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="$parent.sizecrust"  value="16in {{crust.property}}"  name="size">16 inch</label>
                                         </div>
                                     </div>
                                 </div>
