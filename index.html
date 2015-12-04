@@ -85,7 +85,7 @@
         <div class="main" style="float: left">
 
             <ul class = "nav nav-tabs">
-                <li class = "active" ng-click="unnamed fuction here"><a data-toggle="tab" href="#pizza">Pizza</a> </li>
+                <li class = "active"><a data-toggle="tab" href="#pizza">Pizza</a> </li>
                 <li><a data-toggle="tab" href="#sides">Sides</a> </li>
                 <li><a data-toggle="tab" href="#drinks">Drinks</a></li>
             </ul>
@@ -106,86 +106,30 @@
                         <br>
                         <label style="padding-left: 10px">{{currentsauce}}</label>
                         <br>
-
+                        <h5><b>Toppings: </b></h5>
+                        <div ng-repeat="topping in currenttopping">
+                        <label style="padding-left: 10px">{{topping}}</label>
+                            </div>
                         <button style="left:100px" ng-click="addToOrder()" >Add To Cart</button>
 
                         <div class="tab-content">
                             <div id="sizes" class="tab-pane fade in active">
                                 <h3>Select your Size and Crust</h3>
-                                <div style="float: left; padding-left: 20px">
-                                    <h3>Thick Crust</h3>
-                                    <div class="radio" ng-click="crustSelect(10)">
-                                        <label><input type="radio"  name="size">10 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(12)">
-                                        <label><input type="radio" checked="checked" name="size">12 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(14)">
-                                        <label><input type="radio" name="size">14 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(16)">
-                                        <label><input type="radio" name="size">16 inch</label>
-                                    </div>
-                                </div>
-
-                                <div style="float: left; padding-left: 20px">
-                                    <h3>Thin Crust</h3>
-                                    <div class="radio" ng-click="crustSelect(20)">
-                                        <label><input type="radio" name="size">10 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(22)">
-                                        <label><input type="radio" name="size">12 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(24)">
-                                        <label><input type="radio" name="size">14 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(26)">
-                                        <label><input type="radio" name="size">16 inch</label>
-                                    </div>
-                                </div>
-                                <div style="float: left; padding-left: 20px">
-                                    <h3>Pan Crust</h3>
-                                    <div class="radio" ng-click="crustSelect(30)">
-                                        <label><input type="radio" name="size">10 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(32)">
-                                        <label><input type="radio" name="size">12 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(34)">
-                                        <label><input type="radio" name="size">14 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(36)">
-                                        <label><input type="radio" name="size">16 inch</label>
-                                    </div>
-                                </div>
-                                <div style="float: left; padding-left: 20px">
-                                    <h3>Deep Dish Crust</h3>
-                                    <div class="radio" ng-click="crustSelect(40)">
-                                        <label><input type="radio" name="size">10 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(42)">
-                                        <label><input type="radio" name="size">12 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(44)">
-                                        <label><input type="radio" name="size">14 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(46)">
-                                        <label><input type="radio" name="size">16 inch</label>
-                                    </div>
-                                </div>
-                                <div style="float: left; padding-left: 20px">
-                                    <h3>Glutton free Crust</h3>
-                                    <div class="radio" ng-click="crustSelect(50)">
-                                        <label><input type="radio" name="size">10 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(52)">
-                                        <label><input type="radio" name="size">12 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(54)">
-                                        <label><input type="radio" name="size">14 inch</label>
-                                    </div>
-                                    <div class="radio" ng-click="crustSelect(56)">
-                                        <label><input type="radio" name="size">16 inch</label>
+                                <div ng-repeat = "crust in crustArray" >
+                                    <div style="float: left; padding-left: 20px" >
+                                        <h3>{{crust.property}}</h3>
+                                        <div class="radio" >
+                                            <label><input ng-click="crustSelect(crust.property)" type="radio"  ng-model="sizecrust"  name="size">10 inch</label>
+                                        </div>
+                                        <div class="radio" >
+                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="sizecrust"  name="size">12 inch</label>
+                                        </div>
+                                        <div class="radio" >
+                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="sizecrust"  name="size">14 inch</label>
+                                        </div>
+                                        <div class="radio" >
+                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="sizecrust"   name="size">16 inch</label>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -197,31 +141,12 @@
                                 <div style="float: left">
 
                                     <h4>Choose your Sauce</h4>
-                                    <div class="radio" ng-click="sauceSelect('Tomato Sauce')">
-                                        <label><input type="radio"  checked="checked" name="sauce">Tomato</label>
-                                    </div>
-                                    <div class="radio" ng-click="sauceSelect('Marinara Sauce')">
-                                        <label><input type="radio"  name="sauce">Marinara</label>
-                                    </div>
-                                    <div class="radio" ng-click="sauceSelect('BBQ Sauce')">
-                                        <label><input type="radio" name="sauce">BBQ</label>
-                                    </div>
-                                    <div class="radio" ng-click="sauceSelect('Parmesan Sauce')">
-                                        <label><input type="radio" name="sauce">Parmesan</label>
-                                    </div>
-                                    <div class="radio" ng-click="sauceSelect('Alfredo Sauce')">
-                                        <label><input type="radio" name="sauce">Alfredo</label>
-                                    </div>
-                                    <div class="radio" ng-click="sauceSelect('Siracha Sauce')">
-                                        <label><input type="radio" name="sauce">Siracha</label>
-                                    </div>
-                                    <div class="radio" ng-click="sauceSelect('Buffalo Sauce')">
-                                        <label><input type="radio" name="sauce">Buffalo</label>
-                                    </div>
-                                    <div class="radio" ng-click="sauceSelect('No Sauce')">
-                                        <label><input type="radio" name="sauce">None</label>
-                                    </div>
 
+                                    <div ng-repeat = "sauce in sauceArray">
+                                        <div class="radio" >
+                                            <label><input ng-click="sauceSelect(sauce.saucename)" type="radio" name="sauce">{{sauce.saucename}}</label>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div style="float: left; padding-left: 50px">
@@ -245,8 +170,8 @@
                                 <div style="float: left; padding-left: 20px">
                                     <h3>Meaty toppings ;)</h3>
                                     <div ng-repeat="meat in meatArray">
-                                    <div class="checkbox" ng-click="toppingSelect(meat.property)">
-                                        <label><input type="checkbox"  name="{{meat.property}}">{{meat.property}}</label>
+                                    <div class="checkbox" >
+                                        <label><input type="checkbox" ng-click="toppingSelect(meat.property);" name="{{meat.property}}">{{meat.property}}</label>
                                     </div>
                                     </div>
 
@@ -254,8 +179,8 @@
                                 <div style="float: left; padding-left: 20px">
                                     <h3>Non Meaty toppings</h3>
                                     <div ng-repeat="nonmeat in nonmeatArray">
-                                        <div class="checkbox" ng-click="toppingSelect(nonmeat.property)">
-                                            <label><input type="checkbox"  name="{{nonmeat.property}}">{{nonmeat.property}}</label>
+                                        <div class="checkbox" >
+                                            <label><input type="checkbox" ng-click="toppingSelect(nonmeat.property);" name="{{nonmeat.property}}">{{nonmeat.property}}</label>
                                         </div>
                                     </div>
 

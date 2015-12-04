@@ -11,14 +11,7 @@ var connection = mysql.createConnection(credentials); // setup the connection
 connection.connect(function(err){if(err){console.log(error)}});
 
 app.use(express.static(__dirname ));
-app.get("/buttons",function(req,res){
-    var sql = 'SELECT * FROM test.till_buttons';
-    connection.query(sql,(function(res){return function(err,rows,fields){
-        if(err){console.log("We have an error:");
-            console.log(err);}
-        res.send(rows);
-    }})(res));
-});
+
 
 app.get("/login",function(req,res){
     var username = req.param('username');
@@ -41,6 +34,17 @@ app.get("/getToppings", function(req, res){
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("we have and error:");
         console.log(err);
+        } else {
+            res.send(rows);
+        }
+    })
+})
+
+app.get("/getSauce", function(req, res){
+    var sql = 'select saucename from Josh.sauces'
+    connection.query(sql, function(err, rows, fields){
+        if(err){console.log("we have and error:");
+            console.log(err);
         } else {
             res.send(rows);
         }

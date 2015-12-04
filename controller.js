@@ -18,11 +18,11 @@ function ButtonCtrl($scope,buttonApi){
     $scope.getToppings=getToppings;
     $scope.toppingSelect = toppingSelect;
     //constants
-    $scope.sizecrust= 12;
-    $scope.crusttype="thick crust";
-    $scope.currentsizecrust="12 inch Thick Crust";
-    $scope.currentcheese="Mozzarella Cheese";
-    $scope.currentsauce="Tomato Sauce";
+    $scope.sizecrust="12in";
+    $scope.crusttype="thin crust";
+    $scope.currentsizecrust="Choose your Crust";
+    $scope.currentcheese="Choose your Cheese";
+    $scope.currentsauce="Choose your Sauce";
     $scope.currenttopping = [];
     $scope.newname="";
     $scope.newpassword="";
@@ -36,6 +36,7 @@ function ButtonCtrl($scope,buttonApi){
     $scope.meatArray=[];
     $scope.nonmeatArray=[];
     $scope.crustArray=[];
+    $scope.sauceArray=[];
 
 
 
@@ -47,38 +48,13 @@ function ButtonCtrl($scope,buttonApi){
        $scope.currentcheese = cheese;
     }
     function sauceSelect(sauce){
-        $scope.currentsauce = sauce;
+        $scope.currentsauce = sauce + " sauce";
     }
 
     function crustSelect(id){
-        $scope.sizecrust = id;
-        switch (true) {
-            case (id < 20):
-                $scope.currentsizecrust = id + " inch Thick Crust";
-                $scope.crusttype = "thick crust";
-                break;
-            case (id< 30):
-                id = id - 10;
-                $scope.currentsizecrust = id + " inch Thin Crust";
-                $scope.crusttype = "thin crust";
-                break;
-            case (id< 40):
-                id = id - 20;
-                $scope.currentsizecrust = id + " inch Pan Crust";
-                $scope.crusttype = "pan crust";
-                break;
-            case (id< 50):
-                id = id - 30;
-                $scope.currentsizecrust = id + " inch Deep Dish Crust";
-                $scope.crusttype = "deep dish crust";
-                break;
-            case (id< 60):
-                id = id - 40;
-                $scope.currentsizecrust = id + " inch Glutton-free Crust";
-                $scope.crusttype = "gluten free crust";
-                break;
-        }
-
+        console.log($scope.sizecrust);
+                $scope.crusttype = id;
+                $scope.currentsizecrust = $scope.sizecrust +" "+ id;
 
     }
 
@@ -131,7 +107,16 @@ function ButtonCtrl($scope,buttonApi){
                         $scope.crustArray.push(data[i])
                     }
                 }
-                console.log($scope.meatArray)
+                loading = false;
+            }
+        )
+
+        buttonApi.getSauce()
+            .success(function(data){
+                for(i = 0; i < data.length; i++) {
+                        $scope.sauceArray.push(data[i])
+
+                }
                 loading = false;
             }
         )
@@ -147,8 +132,8 @@ function ButtonCtrl($scope,buttonApi){
         } else {
             $scope.currenttopping.splice($scope.currenttopping.indexOf(toppingName), 1);
         }
-        console.log($scope.currenttopping);
     }
+
 
     getToppings();
 }
@@ -176,6 +161,11 @@ function buttonApi($http,apiUrl){
         login: function(username, password){
             var url = apiUrl+'/login?username='+username+'&password='+password;
             return $http.get(url);
+        },
+        getSauce: function(){
+            var url = apiUrl+'/getSauce';
+            return $http.get(url);
         }
+
     };
 }
