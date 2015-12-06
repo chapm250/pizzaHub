@@ -19,6 +19,7 @@ function ButtonCtrl($scope,buttonApi){
     $scope.toppingSelect = toppingSelect;
     $scope.addToCart = addToCart;
     $scope.addPizzaToCart = addPizzaToCart;
+    $scope.refreshCart=refreshCart;
     //constants
     $scope.sizecrust="Choose your Crust";
     $scope.crusttype="";
@@ -42,6 +43,7 @@ function ButtonCtrl($scope,buttonApi){
     $scope.sauceArray=[];
     $scope.drinksArray=[];
     $scope.sidesArray=[];
+    $scope.dsItemsInCart=[];
     //$scope.meats=[];
 
 
@@ -124,7 +126,7 @@ function ButtonCtrl($scope,buttonApi){
                 }
                 loading = false;
             }
-        )
+        );
         buttonApi.getDrank()
             .success(function(data){
                 for(i = 0; i < data.length; i++) {
@@ -133,7 +135,7 @@ function ButtonCtrl($scope,buttonApi){
                 }
                 loading = false;
             }
-        )
+        );
         buttonApi.getSide()
             .success(function(data){
                 for(i = 0; i < data.length; i++) {
@@ -165,13 +167,30 @@ function ButtonCtrl($scope,buttonApi){
         //    $scope.currenttopping.splice($scope.currenttopping.indexOf(toppingName), 1);
         //}
         //console.log($scope.meats);
-        console.log($scope.currenttopping);
+    }
+
+    function refreshCart(){
+        loading=true;
+        $scope.dsItemsInCart = [];
+        buttonApi.getCart()
+            .success(function(data){
+                for(i = 0; i < data.length; i++) {
+                    if((data[i].type == "side") || (data[i].type == "drank")){
+                        $scope.dsItemsInCart.push(data[i]);
+                    }
+
+                }
+                console.log($scope.dsItemsInCart);
+                loading=false;
+            });
+
+
     }
 
     function addToCart(itemname, itemtype, pizzaID) {
         buttonApi.addToCart(itemname, itemtype, pizzaID)
             .success(function(){
-                //refreshCart();
+                refreshCart();
 
             })
 
@@ -197,6 +216,7 @@ function ButtonCtrl($scope,buttonApi){
     }
 
     getShit();
+    refreshCart();
 }
 
 
@@ -234,6 +254,10 @@ function buttonApi($http,apiUrl){
         },
         getSide: function(){
             var url = apiUrl+'/getSide';
+            return $http.get(url);
+        },
+        getCart: function(){
+            var url = apiUrl+'/getCart';
             return $http.get(url);
         },
         addToCart: function(itemname, itemtype, pizzaID){

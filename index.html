@@ -69,8 +69,6 @@
             <div >
                 <button ><span ></span> Log In </button>
             </div>
-
-
         </form>
 
         <div style="padding-top: 20px"><button ng-click="gotoregister()">Register</button></div>
@@ -78,158 +76,152 @@
 
 
     <div class="loggedin" style="display: inline">
-        <div  style = " width: 300px; height: 100%; float: right; background-color: greenyellow" class = "pizzacart">
-            <h3>Shopping Cart</h3>
-        </div>
 
-        <div class="main" >
+
+        <div class="main" style="width: 75%; float: left">
 
             <ul class = "nav nav-tabs">
-                <li class = "active"><a data-toggle="tab" href="#pizza">Pizza</a> </li>
-                <li><a data-toggle="tab" href="#sides">Sides</a> </li>
-                <li><a data-toggle="tab" href="#drinks">Drinks</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="pizza" class="tab-pane fade in active">
-                    <h3>Pizza Builder</h3>
-                    <div style="padding-left:50px">
-                        <ul class="nav nav-pills">
-                            <li class="active"><a data-toggle="pill" href="#sizes">Sizes&Crusts</a></li>
-                            <li><a data-toggle="pill" href="#sauces">Sauces&Cheese</a></li>
-                            <li><a data-toggle="pill" href="#toppings">Toppings</a></li>
-                        </ul>
+        <li class = "active"><a data-toggle="tab" href="#pizza">Pizza</a> </li>
+        <li><a data-toggle="tab" href="#sides">Sides</a> </li>
+        <li><a data-toggle="tab" href="#drinks">Drinks</a></li>
+        </ul>
+        <div class="tab-content" >
+            <div id="pizza" class="tab-pane fade in active">
+                <h3>Pizza Builder</h3>
+                <div style="padding-left:50px">
+                    <ul class="nav nav-pills">
+                        <li class="active"><a data-toggle="pill" href="#sizes">Sizes&Crusts</a></li>
+                        <li><a data-toggle="pill" href="#sauces">Sauces&Cheese</a></li>
+                        <li><a data-toggle="pill" href="#toppings">Toppings</a></li>
+                    </ul>
 
-                        <h3>Current Pizza Selection</h3>
-                        <label>{{sizecrust}}</label>
-                        <br>
-                        <label style="padding-left: 10px">{{currentcheese}}</label>
-                        <br>
-                        <label style="padding-left: 10px">{{currentsauce}}</label>
-                        <br>
-                        <h5><b>Toppings: </b></h5>
-                        <div ng-repeat="topping in currenttopping">
+                    <h3>Current Pizza Selection</h3>
+                    <label>{{sizecrust}}</label>
+                    <br>
+                    <label style="padding-left: 10px">{{currentcheese}}</label>
+                    <br>
+                    <label style="padding-left: 10px">{{currentsauce}}</label>
+                    <br>
+                    <h5><b>Toppings: </b></h5>
+                    <div ng-repeat="topping in currenttopping">
                         <label style="padding-left: 10px">{{topping}}</label>
-                            </div>
-                        <button style="left:100px" ng-click="addPizzaToCart()" >Add To Cart</button>
+                    </div>
+                    <button style="left:100px" ng-click="addPizzaToCart()" >Add To Cart</button>
 
-                        <div class="tab-content">
-                            <div id="sizes" class="tab-pane fade in active">
-                                <h3>Select your Size and Crust</h3>
+                    <div class="tab-content">
+                        <div id="sizes" class="tab-pane fade in active">
+                            <h3>Select your Size and Crust</h3>
 
 
-                                <div  ng-repeat = "crust in crustArray" >
-                                    <div style="float: left; padding-left: 20px" >
-                                        <h3>{{crust.property}}</h3>
-                                        <div class="radio" >
-                                            <label><input ng-click="crustSelect(crust.property)" type="radio"  ng-model="$parent.sizecrust" value="10in {{crust.property}}" name="size" required="">10 inch</label>
-                                        </div>
-                                        <div class="radio" >
-                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="$parent.sizecrust"  value="12in {{crust.property}}" name="size">12 inch</label>
-                                        </div>
-                                        <div class="radio" >
-                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="$parent.sizecrust"  value="14in {{crust.property}}" name="size">14 inch</label>
-                                        </div>
-                                        <div class="radio" >
-                                            <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="$parent.sizecrust"  value="16in {{crust.property}}"  name="size">16 inch</label>
-                                        </div>
+                            <div  ng-repeat = "crust in crustArray" >
+                                <div style="float: left; padding-left: 20px" >
+                                    <h3>{{crust.property}}</h3>
+                                    <div class="radio" >
+                                        <label><input ng-click="crustSelect(crust.property)" type="radio"  ng-model="$parent.sizecrust" value="10in {{crust.property}}" name="size" required="">10 inch</label>
                                     </div>
-                                </div>
-
-
-
-                            </div>
-                            <div id="sauces" class="tab-pane fade">
-                                <h3>Select your Sauce and Cheese</h3>
-                                <div style="float: left">
-
-                                    <h4>Choose your Sauce</h4>
-
-                                    <div ng-repeat = "sauce in sauceArray">
-                                        <div class="radio" >
-                                            <label><input ng-click="sauceSelect(sauce.saucename)" type="radio" name="sauce">{{sauce.saucename}}</label>
-                                        </div>
+                                    <div class="radio" >
+                                        <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="$parent.sizecrust"  value="12in {{crust.property}}" name="size">12 inch</label>
                                     </div>
-                                </div>
-
-                                <div style="float: left; padding-left: 50px">
-                                    <h4>Choose your Main Cheese</h4>
-                                    <div class="radio" ng-click="cheeseSelect('Mozzarella Cheese')">
-                                        <label><input type="radio"  checked="checked" name="cheese">Mozzarella</label>
+                                    <div class="radio" >
+                                        <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="$parent.sizecrust"  value="14in {{crust.property}}" name="size">14 inch</label>
                                     </div>
-                                    <div class="radio" ng-click="cheeseSelect('Cheddar Cheese')">
-                                        <label><input type="radio"  name="cheese">Cheddar</label>
-                                    </div>
-                                    <div class="radio" ng-click="cheeseSelect('Provolone Cheese')">
-                                        <label><input type="radio" name="cheese">Provolone</label>
-                                    </div>
-                                    <div class="radio" ng-click="cheeseSelect('I FUCKING HATE CHEESE WHY WOULD I HAVE THAT ON MY PIZZA')">
-                                        <label><input type="radio" name="cheese">None</label>
+                                    <div class="radio" >
+                                        <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="$parent.sizecrust"  value="16in {{crust.property}}"  name="size">16 inch</label>
                                     </div>
                                 </div>
                             </div>
-                            <div id="toppings" class="tab-pane fade">
-                                <h3>Select your toppings</h3>
-                                <div style="float: left; padding-left: 20px">
-                                    <h3>Meaty toppings ;)</h3>
-                                    <div ng-repeat="meat in meatArray">
+
+
+
+                        </div>
+                        <div id="sauces" class="tab-pane fade">
+                            <h3>Select your Sauce and Cheese</h3>
+                            <div style="float: left">
+
+                                <h4>Choose your Sauce</h4>
+
+                                <div ng-repeat = "sauce in sauceArray">
+                                    <div class="radio" >
+                                        <label><input ng-click="sauceSelect(sauce.saucename)" type="radio" name="sauce">{{sauce.saucename}}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="float: left; padding-left: 50px">
+                                <h4>Choose your Main Cheese</h4>
+                                <div class="radio" ng-click="cheeseSelect('Mozzarella Cheese')">
+                                    <label><input type="radio"  checked="checked" name="cheese">Mozzarella</label>
+                                </div>
+                                <div class="radio" ng-click="cheeseSelect('Cheddar Cheese')">
+                                    <label><input type="radio"  name="cheese">Cheddar</label>
+                                </div>
+                                <div class="radio" ng-click="cheeseSelect('Provolone Cheese')">
+                                    <label><input type="radio" name="cheese">Provolone</label>
+                                </div>
+                                <div class="radio" ng-click="cheeseSelect('I FUCKING HATE CHEESE WHY WOULD I HAVE THAT ON MY PIZZA')">
+                                    <label><input type="radio" name="cheese">None</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="toppings" class="tab-pane fade">
+                            <h3>Select your toppings</h3>
+                            <div style="float: left; padding-left: 20px">
+                                <h3>Meaty toppings ;)</h3>
+                                <div ng-repeat="meat in meatArray">
                                     <div class="checkbox" >
                                         <label><input type="checkbox" ng-model="meat.selected" ng-click="toppingSelect(meat.property);" name="{{meat.property}}">{{meat.property}}</label>
                                     </div>
-                                    </div>
-
                                 </div>
-                                <div style="float: left; padding-left: 20px">
-                                    <h3>Non Meaty toppings</h3>
-                                    <div ng-repeat="nonmeat in nonmeatArray">
-                                        <div class="checkbox" >
-                                            <label><input type="checkbox" ng-model="nonmeat.selected" ng-click="toppingSelect(nonmeat.property);" name="{{nonmeat.property}}">{{nonmeat.property}}</label>
-                                        </div>
-                                    </div>
-
-                                </div>
-
 
                             </div>
+                            <div style="float: left; padding-left: 20px">
+                                <h3>Non Meaty toppings</h3>
+                                <div ng-repeat="nonmeat in nonmeatArray">
+                                    <div class="checkbox" >
+                                        <label><input type="checkbox" ng-model="nonmeat.selected" ng-click="toppingSelect(nonmeat.property);" name="{{nonmeat.property}}">{{nonmeat.property}}</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
-
-                <div id="sides" class="tab-pane fade">
-                    <h3>Sides</h3>
-                    <div ng-repeat = "side in sidesArray" style="display: inline; padding-left: 25px; padding-top: 10px">
-                        <button ng-click="addToCart(side.sidename, 'side',0)" class = "btn btn-default" >{{side.sidename}}</button>
-                    </div>
-                </div>
-                <div id="drinks" class="tab-pane fade">
-                    <h3>Drinks</h3>
-                    <div ng-repeat = "drank in drinksArray" style="display: inline; padding-left: 25px; padding-top: 10px">
-                        <button ng-click="addToCart(drank.drinkname, 'drank',0)" class = "btn btn-default" style="">{{drank.drinkname}}</button>
-                    </div>
-                </div>
-                </div>
             </div>
 
+            <div id="sides" class="tab-pane fade">
+                <h3>Sides</h3>
+                <div ng-repeat = "side in sidesArray" style="display: inline; padding-left: 25px; padding-top: 10px">
+                    <button ng-click="addToCart(side.sidename, 'side',0)" class = "btn btn-default" >{{side.sidename}}</button>
+                </div>
+            </div>
+            <div id="drinks" class="tab-pane fade">
+                <h3>Drinks</h3>
+                <div ng-repeat = "drank in drinksArray" style="display: inline; padding-left: 25px; padding-top: 10px">
+                    <button ng-click="addToCart(drank.drinkname, 'drank',0)" class = "btn btn-default" style="">{{drank.drinkname}}</button>
+                </div>
+            </div>
         </div>
     </div>
 
+    <div  style = " width: 25%; float: left" class = "pizzacart">
+        <h3>Shopping Cart</h3>
+        <table class ="table" style="">
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+            </tr>
 
+            <tr ng-repeat="item in dsItemsInCart">
+                <td>{{item.itemname}} </td>
+                <td>{{item.quantity}} </td>
+            </tr>
+        </table>
+    </div>
 
-
-
-
-
-    <!--<div style="position:relative;left:10px;top:10px" class = "pSize">-->
-    <!--<div >-->
-    <!--<button class = "pizzaSizeButton"  id="small" ng-click="???" >Small</button>-->
-    <!--<button class = "pizzaSizeButton"  id="medium" ng-click="???" >Medium</button>-->
-    <!--<button class = "pizzaSizeButton"  id="large" ng-click="???" >Large</button>-->
-    <!--<button class = "pizzaSizeButton"  id="xlarge" ng-click="???" >Extra Large</button>-->
-    <!--</div>-->
-    <!--</div>-->
-
-
-
-
+</div>
+</div>
 </div>
 </body>
 </html>

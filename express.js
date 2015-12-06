@@ -63,6 +63,17 @@ app.get("/getDrank", function(req, res){
     })
 });
 
+app.get("/getCart", function(req, res){
+    var sql = 'select * from Josh.shoppingcartbase'
+    connection.query(sql, function(err, rows, fields){
+        if(err){console.log("we have and error:");
+            console.log(err);
+        } else {
+            res.send(rows);
+        }
+    })
+});
+
 app.get("/addToCart", function(req, res){
     var itemname = req.param('itemname');
     var itemtype = req.param('itemtype');
