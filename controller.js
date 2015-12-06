@@ -17,13 +17,16 @@ function ButtonCtrl($scope,buttonApi){
     $scope.login=login;
     $scope.getShit=getShit;
     $scope.toppingSelect = toppingSelect;
+    $scope.addToCart = addToCart;
+    $scope.addPizzaToCart = addPizzaToCart;
     //constants
-    $scope.sizecrust="";
+    $scope.sizecrust="Choose your Crust";
     $scope.crusttype="";
-    $scope.currentsizecrust="Choose your Crust";
+    $scope.pizzaSize="";
     $scope.currentcheese="Choose your Cheese";
     $scope.currentsauce="Choose your Sauce";
     $scope.currenttopping = [];
+    $scope.pizzaID = 1;
     $scope.newname="";
     $scope.newpassword="";
     $scope.newpassword1="";
@@ -31,7 +34,7 @@ function ButtonCtrl($scope,buttonApi){
     $scope.newaddress="";
     $scope.newphone="";
     $scope.newcard="";
-    $scope.username="";
+    $scope.username="snuffy";
     $scope.password="";
     $scope.meatArray=[];
     $scope.nonmeatArray=[];
@@ -39,6 +42,7 @@ function ButtonCtrl($scope,buttonApi){
     $scope.sauceArray=[];
     $scope.drinksArray=[];
     $scope.sidesArray=[];
+    //$scope.meats=[];
 
 
 
@@ -48,17 +52,14 @@ function ButtonCtrl($scope,buttonApi){
 
     function cheeseSelect(cheese){
        $scope.currentcheese = cheese;
-        console.log($scope.drinksArray);
-        console.log($scope.sidesArray);
     }
     function sauceSelect(sauce){
         $scope.currentsauce = sauce + " sauce";
     }
 
     function crustSelect(id){
-        console.log($scope.sizecrust);
-                $scope.crusttype = id;
-                $scope.currentsizecrust = $scope.sizecrust;
+        $scope.crusttype = id;
+        $scope.pizzaSize = $scope.sizecrust.substring(0,4);
 
     }
 
@@ -146,16 +147,58 @@ function ButtonCtrl($scope,buttonApi){
 
     function toppingSelect(toppingName){
 
-        if($scope.currenttopping.indexOf(toppingName) == -1) {
-            $scope.currenttopping.push(toppingName);
-        } else {
-            $scope.currenttopping.splice($scope.currenttopping.indexOf(toppingName), 1);
-        }
+        $scope.currenttopping = [];
+        angular.forEach($scope.meatArray, function(meat){
+            if (meat.selected == true){
+                $scope.currenttopping.push(meat.property);
+            }
+        });
+        angular.forEach($scope.nonmeatArray, function(nonmeat){
+            if (nonmeat.selected == true){
+                $scope.currenttopping.push(nonmeat.property);
+            }
+        });
+
+        //if($scope.currenttopping.indexOf(toppingName) == -1) {
+        //    $scope.currenttopping.push(toppingName);
+        //} else {
+        //    $scope.currenttopping.splice($scope.currenttopping.indexOf(toppingName), 1);
+        //}
+        //console.log($scope.meats);
+        console.log($scope.currenttopping);
     }
 
+    function addToCart(itemname, itemtype, pizzaID) {
+        buttonApi.addToCart(itemname, itemtype, pizzaID)
+            .success(function(){
+                //refreshCart();
 
-    getToppings();
+            })
+
+
+    }
+    function addPizzaToCart(){
+        addToCart($scope.crusttype, $scope.pizzaSize, $scope.pizzaID);
+        addToCart($scope.currentsauce, 'sauce', $scope.pizzaID);
+        addToCart($scope.currentcheese, 'cheese', $scope.pizzaID);
+        for (i = 0; i < $scope.currenttopping.length; i++){
+            addToCart($scope.currenttopping[i], $scope.pizzaSize, $scope.pizzaID);
+        }
+        $scope.pizzaID++;
+
+        angular.forEach($scope.meatArray, function(meat) {
+            meat.selected = false;
+        });
+        angular.forEach($scope.nonmeatArray, function(nonmeat) {
+            nonmeat.selected = false;
+        })
+        $scope.currenttopping = [];
+
+    }
+
+    getShit();
 }
+
 
 
 
@@ -191,6 +234,10 @@ function buttonApi($http,apiUrl){
         },
         getSide: function(){
             var url = apiUrl+'/getSide';
+            return $http.get(url);
+        },
+        addToCart: function(itemname, itemtype, pizzaID){
+            var url = apiUrl+'/addToCart?itemname=' + itemname+'&itemtype=' +itemtype+'&pizzaID='+pizzaID;
             return $http.get(url);
         }
 

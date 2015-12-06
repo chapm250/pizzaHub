@@ -31,7 +31,7 @@ app.get("/login",function(req,res){
     })});
 
 app.get("/getToppings", function(req, res){
-    var sql = 'select property, type from Josh.10in'
+    var sql = 'select property, type, false as selected from Josh.10in'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("we have and error:");
         console.log(err);
@@ -62,6 +62,42 @@ app.get("/getDrank", function(req, res){
         }
     })
 });
+
+app.get("/addToCart", function(req, res){
+    var itemname = req.param('itemname');
+    var itemtype = req.param('itemtype');
+    var pizzaID = req.param('pizzaID');
+    var exists = false;
+    async.series([
+        function(callback){
+            var sql = 'select * from Josh.shoppingcartbase where itemname ="' + itemname+'"';
+            connection.query(sql, function(err, rows, fields){
+                if(err){console.log("we have an error:");
+                console.log("inselect" + sql);
+                } else {
+                    if(rows.length != 0){
+                        exists = true;
+                    }
+                }
+                callback();
+            })
+        },
+        function (callback){
+            if(exists && (pizzaID==0)){
+                var sql = 'update Josh.shoppingcartbase set quantity = quantity + 1 where itemname = "' + itemname +'"';
+            } else {
+                var sql = 'insert into Josh.shoppingcartbase (itemname, quantity, pizzaID, type) values ("' + itemname + '", 1, '+  pizzaID +  ', "'+ itemtype+'")';
+            }
+            connection.query(sql, function(err, rows, fields){
+                if(err){console.log("we have an error:");
+                    console.log("in update" + sql);
+                } else {
+                    res.send(err)
+                }
+            })
+        }
+    ])
+})
 
 app.get("/getSide", function(req, res){
     var sql = 'select sidename from Josh.sides'

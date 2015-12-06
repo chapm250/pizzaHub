@@ -82,7 +82,7 @@
             <h3>Shopping Cart</h3>
         </div>
 
-        <div class="main" style="float: left">
+        <div class="main" >
 
             <ul class = "nav nav-tabs">
                 <li class = "active"><a data-toggle="tab" href="#pizza">Pizza</a> </li>
@@ -100,7 +100,7 @@
                         </ul>
 
                         <h3>Current Pizza Selection</h3>
-                        <label>{{currentsizecrust}}</label>
+                        <label>{{sizecrust}}</label>
                         <br>
                         <label style="padding-left: 10px">{{currentcheese}}</label>
                         <br>
@@ -110,7 +110,7 @@
                         <div ng-repeat="topping in currenttopping">
                         <label style="padding-left: 10px">{{topping}}</label>
                             </div>
-                        <button style="left:100px" ng-click="addToOrder()" >Add To Cart</button>
+                        <button style="left:100px" ng-click="addPizzaToCart()" >Add To Cart</button>
 
                         <div class="tab-content">
                             <div id="sizes" class="tab-pane fade in active">
@@ -121,7 +121,7 @@
                                     <div style="float: left; padding-left: 20px" >
                                         <h3>{{crust.property}}</h3>
                                         <div class="radio" >
-                                            <label><input ng-click="crustSelect(crust.property)" type="radio"  ng-model="$parent.sizecrust" value="10in {{crust.property}}" name="size">10 inch</label>
+                                            <label><input ng-click="crustSelect(crust.property)" type="radio"  ng-model="$parent.sizecrust" value="10in {{crust.property}}" name="size" required="">10 inch</label>
                                         </div>
                                         <div class="radio" >
                                             <label><input ng-click="crustSelect(crust.property)" type="radio" ng-model="$parent.sizecrust"  value="12in {{crust.property}}" name="size">12 inch</label>
@@ -173,7 +173,7 @@
                                     <h3>Meaty toppings ;)</h3>
                                     <div ng-repeat="meat in meatArray">
                                     <div class="checkbox" >
-                                        <label><input type="checkbox" ng-click="toppingSelect(meat.property);" name="{{meat.property}}">{{meat.property}}</label>
+                                        <label><input type="checkbox" ng-model="meat.selected" ng-click="toppingSelect(meat.property);" name="{{meat.property}}">{{meat.property}}</label>
                                     </div>
                                     </div>
 
@@ -182,7 +182,7 @@
                                     <h3>Non Meaty toppings</h3>
                                     <div ng-repeat="nonmeat in nonmeatArray">
                                         <div class="checkbox" >
-                                            <label><input type="checkbox" ng-click="toppingSelect(nonmeat.property);" name="{{nonmeat.property}}">{{nonmeat.property}}</label>
+                                            <label><input type="checkbox" ng-model="nonmeat.selected" ng-click="toppingSelect(nonmeat.property);" name="{{nonmeat.property}}">{{nonmeat.property}}</label>
                                         </div>
                                     </div>
 
@@ -196,9 +196,16 @@
 
                 <div id="sides" class="tab-pane fade">
                     <h3>Sides</h3>
+                    <div ng-repeat = "side in sidesArray" style="display: inline; padding-left: 25px; padding-top: 10px">
+                        <button ng-click="addToCart(side.sidename, 'side',0)" class = "btn btn-default" >{{side.sidename}}</button>
+                    </div>
                 </div>
                 <div id="drinks" class="tab-pane fade">
                     <h3>Drinks</h3>
+                    <div ng-repeat = "drank in drinksArray" style="display: inline; padding-left: 25px; padding-top: 10px">
+                        <button ng-click="addToCart(drank.drinkname, 'drank',0)" class = "btn btn-default" style="">{{drank.drinkname}}</button>
+                    </div>
+                </div>
                 </div>
             </div>
 
