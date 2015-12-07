@@ -53,7 +53,7 @@ app.get("/getSauce", function(req, res){
 });
 
 app.get("/getDrank", function(req, res){
-    var sql = 'select drinkname from Josh.Drinks'
+    var sql = 'select property from Josh.Drinks'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("we have and error:");
             console.log(err);
@@ -69,9 +69,13 @@ app.get("/getCart", function(req, res){
         if(err){console.log("we have and error:");
             console.log(err);
         } else {
+            console.log(rows);
             res.send(rows);
         }
     })
+
+
+
 });
 
 app.get("/addToCart", function(req, res){
@@ -111,7 +115,7 @@ app.get("/addToCart", function(req, res){
 })
 
 app.get("/getSide", function(req, res){
-    var sql = 'select sidename from Josh.sides'
+    var sql = 'select property from Josh.sides'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("we have and error:");
             console.log(err);
@@ -120,6 +124,20 @@ app.get("/getSide", function(req, res){
         }
     })
 });
+
+app.get("/getPrice", function(req, res){
+    var itemname = req.param('itemname');
+    var tablename = req.param('tablename');
+
+    var sql = 'select * from Josh.'+ tablename+' where property = "' + itemname + '"';
+    connection.query(sql, function(err, rows, fields){
+        if(err){console.log("fucking error:");
+        console.log(err)
+        } else {
+            res.send(rows[0])
+        }
+    })
+})
 
 
 app.get("/register",function(req,res){

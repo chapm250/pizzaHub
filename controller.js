@@ -4,7 +4,7 @@ angular.module('buttons',[])
     .constant('apiUrl','http://localhost:1338'); //CHANGE for the lab!
 
 
-function ButtonCtrl($scope,buttonApi){
+function ButtonCtrl($q, $scope,buttonApi){
     $scope.buttons=[]; //Initially all was still
     $scope.errorMessage='';
     //functions
@@ -20,6 +20,7 @@ function ButtonCtrl($scope,buttonApi){
     $scope.addToCart = addToCart;
     $scope.addPizzaToCart = addPizzaToCart;
     $scope.refreshCart=refreshCart;
+    $scope.getPrice = getPrice;
     //constants
     $scope.sizecrust="Choose your Crust";
     $scope.crusttype="";
@@ -44,7 +45,7 @@ function ButtonCtrl($scope,buttonApi){
     $scope.drinksArray=[];
     $scope.sidesArray=[];
     $scope.dsItemsInCart=[];
-    //$scope.meats=[];
+    $q.defer;
 
 
 
@@ -161,12 +162,7 @@ function ButtonCtrl($scope,buttonApi){
             }
         });
 
-        //if($scope.currenttopping.indexOf(toppingName) == -1) {
-        //    $scope.currenttopping.push(toppingName);
-        //} else {
-        //    $scope.currenttopping.splice($scope.currenttopping.indexOf(toppingName), 1);
-        //}
-        //console.log($scope.meats);
+
     }
 
     function refreshCart(){
@@ -215,6 +211,26 @@ function ButtonCtrl($scope,buttonApi){
 
     }
 
+
+    function testFunction(itemname, tablename){
+        //getPrice(itemname, tablename);
+        return 0;
+    }
+
+
+    function getPrice(itemname, tablename){
+        var defer = $q.defer();
+        buttonApi.getPrice(itemname, tablename)
+            .then(function(prices){
+                console.log("getprice ");
+                defer.resolve(prices);
+            });                               ;
+            //.error(function(){console.log("error")});
+        return defer.promise.$$state;
+    }
+    //console.log(getPrice("pan crust", "10in").$$state.value);
+
+
     getShit();
     refreshCart();
 }
@@ -231,13 +247,11 @@ function buttonApi($http,apiUrl){
         },
         clickButton: function(id){
             var url = apiUrl+'/click?id='+id;
-//      console.log("Attempting with "+url);
             return $http.get(url); // Easy enough to do this way
         },
         register: function(name, password, phone, card, address, mail){
             var url = apiUrl+'/register?name=' + name + '&password=' + password + '&phone=' + phone + '&card=' + card
                 + '&address=' + address + '&mail=' + mail;
-            console.log(mail);
             return $http.get(url);
         },
         login: function(username, password){
@@ -262,6 +276,10 @@ function buttonApi($http,apiUrl){
         },
         addToCart: function(itemname, itemtype, pizzaID){
             var url = apiUrl+'/addToCart?itemname=' + itemname+'&itemtype=' +itemtype+'&pizzaID='+pizzaID;
+            return $http.get(url);
+        },
+        getPrice: function(itemname, tablename){
+            var url = apiUrl+'/getPrice?itemname=' + itemname+'&tablename='+tablename;
             return $http.get(url);
         }
 

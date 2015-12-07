@@ -193,13 +193,13 @@
             <div id="sides" class="tab-pane fade">
                 <h3>Sides</h3>
                 <div ng-repeat = "side in sidesArray" style="display: inline; padding-left: 25px; padding-top: 10px">
-                    <button ng-click="addToCart(side.sidename, 'side',0)" class = "btn btn-default" >{{side.sidename}}</button>
+                    <button ng-click="addToCart(side.property, 'side',0)" class = "btn btn-default" >{{side.property}}</button>
                 </div>
             </div>
             <div id="drinks" class="tab-pane fade">
                 <h3>Drinks</h3>
                 <div ng-repeat = "drank in drinksArray" style="display: inline; padding-left: 25px; padding-top: 10px">
-                    <button ng-click="addToCart(drank.drinkname, 'drank',0)" class = "btn btn-default" style="">{{drank.drinkname}}</button>
+                    <button ng-click="addToCart(drank.property, 'drank',0)" class = "btn btn-default" style="">{{drank.property}}</button>
                 </div>
             </div>
         </div>
@@ -213,11 +213,34 @@
                 <th>Quantity</th>
             </tr>
 
-            <tr ng-repeat="item in dsItemsInCart">
+        </table>
+        <!--<h3>{{getPrice('Mountain Dew')}}</h3>-->
+
+        <div ng-repeat="item in dsItemsInCart">
+
+
+        <table  class ="table" style="">
+
+            <tr >
                 <td>{{item.itemname}} </td>
                 <td>{{item.quantity}} </td>
+
             </tr>
-        </table>
+
+            </table>
+            <table class="table">
+                <tr>
+                    <!--<td>${{getPrice(item.itemname, 'Drinks', 'PizzaHut')}}</td>-->
+                    <!--<td>${{getPriceHelper('Mountain Dew 20oz', 'Drinks').value.Dominos}}</td>-->
+                    <!--<td>${{getPrice(item.itemname, 'Drinks')}}</td>-->
+                    <!--<td>${{getPrice(item.itemname, 'Drinks', 'PizzaHut')}}</td>-->
+                    <!--<td>${{getPrice(item.itemname, 'Drinks', 'PizzaHut')}}</td>-->
+                </tr>
+            </table>
+
+            </div>
+
+
     </div>
 
 </div>
