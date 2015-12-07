@@ -13,6 +13,7 @@
 </head>
 <body ng-app="buttons">
 <h1>Pizza Hub</h1>
+
 <div id="buttons" ng-controller="buttonCtrl">
 
     <div class="register" style="display: none">
@@ -76,7 +77,7 @@
 
 
     <div class="loggedin" style="display: inline">
-
+        <button style="position: absolute; right:0px">Log Out</button>
 
         <div class="main" style="width: 75%; float: left">
 
@@ -150,7 +151,7 @@
                             <div style="float: left; padding-left: 50px">
                                 <h4>Choose your Main Cheese</h4>
                                 <div class="radio" ng-click="cheeseSelect('Mozzarella Cheese')">
-                                    <label><input type="radio"  checked="checked" name="cheese">Mozzarella</label>
+                                    <label><input type="radio"  name="cheese">Mozzarella</label>
                                 </div>
                                 <div class="radio" ng-click="cheeseSelect('Cheddar Cheese')">
                                     <label><input type="radio"  name="cheese">Cheddar</label>
@@ -207,38 +208,50 @@
 
     <div  style = " width: 25%; float: left" class = "pizzacart">
         <h3>Shopping Cart</h3>
-        <table class ="table" style="">
-            <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-            </tr>
+        <!--<table class ="table" style="">-->
+            <!--<tr>-->
+                <!--<th>Item</th>-->
+                <!--<th>Quantity</th>-->
+            <!--</tr>-->
 
-        </table>
+        <!--</table>-->
         <!--<h3>{{getPrice('Mountain Dew')}}</h3>-->
 
-        <div ng-repeat="item in dsItemsInCart">
-
+        <div ng-repeat="drink in drinksItemsInCart">
 
         <table  class ="table" style="">
 
             <tr >
-                <td>{{item.itemname}} </td>
-                <td>{{item.quantity}} </td>
+                <td>{{drink.quantity}} {{drink.itemname}}s</td>
+
+            </tr>
+            <tr>
+                <td>${{drink.Dominos}} ${{drink.PizzaHut}} ${{drink.PapaJohn}} ${{drink.Caseys}} ${{drink.HungryHowie}} ${{drink.PizzaRanch}}</td>
+                <!--<td>${{drink.PizzaHut}}</td>-->
+                <!--<td>${{drink.PapaJohn}}</td>-->
+                <!--<td>${{drink.Caseys}}</td>-->
+                <!--<td>${{drink.HungryHowie}}</td>-->
+                <!--<td>${{drink.PizzaRanch}}</td>-->
 
             </tr>
 
             </table>
-            <table class="table">
-                <tr>
-                    <!--<td>${{getPrice(item.itemname, 'Drinks', 'PizzaHut')}}</td>-->
-                    <!--<td>${{getPriceHelper('Mountain Dew 20oz', 'Drinks').value.Dominos}}</td>-->
-                    <!--<td>${{getPrice(item.itemname, 'Drinks')}}</td>-->
-                    <!--<td>${{getPrice(item.itemname, 'Drinks', 'PizzaHut')}}</td>-->
-                    <!--<td>${{getPrice(item.itemname, 'Drinks', 'PizzaHut')}}</td>-->
-                </tr>
-            </table>
 
             </div>
+        <div ng-repeat="side in sidesItemsInCart">
+
+
+            <table  class ="table" style="">
+
+                <tr >
+                    <td>{{side.quantity}} {{side.itemname}}s</td>
+
+                </tr>
+                <tr>
+                    <td>${{side.Dominos}} ${{side.PizzaHut}} ${{side.PapaJohn}} ${{side.Caseys}} ${{side.HungryHowie}} ${{side.PizzaRanch}}</td>
+                </tr>
+            </table>
+        </div>
 
 
     </div>

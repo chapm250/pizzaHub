@@ -44,7 +44,9 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.sauceArray=[];
     $scope.drinksArray=[];
     $scope.sidesArray=[];
-    $scope.dsItemsInCart=[];
+    $scope.drinksItemsInCart=[];
+    $scope.sidesItemsInCart=[];
+    $scope.pizzasInCart=[]
     $q.defer;
 
 
@@ -161,26 +163,63 @@ function ButtonCtrl($q, $scope,buttonApi){
                 $scope.currenttopping.push(nonmeat.property);
             }
         });
-
-
     }
 
     function refreshCart(){
         loading=true;
-        $scope.dsItemsInCart = [];
-        buttonApi.getCart()
+        $scope.drinksItemsInCart = [];
+        $scope.sidesItemsInCart = [];
+        buttonApi.getCart("Drinks")
             .success(function(data){
                 for(i = 0; i < data.length; i++) {
-                    if((data[i].type == "side") || (data[i].type == "drank")){
-                        $scope.dsItemsInCart.push(data[i]);
+                    if((data[i].type == "drank")){
+                        $scope.drinksItemsInCart.push(data[i]);
+                    }
+                }
+                console.log($scope.drinksItemsInCart);
+                loading=false;
+            });
+        buttonApi.getCart("sides")
+            .success(function(data){
+                for(i = 0; i < data.length; i++) {
+                    if((data[i].type == "side")){
+                        $scope.sidesItemsInCart.push(data[i]);
+
                     }
 
                 }
-                console.log($scope.dsItemsInCart);
+                console.log($scope.sidesItemsInCart);
                 loading=false;
             });
 
+    }
 
+    function refreshPizzaCart(){
+        loading=true;
+        $scope.pizzasInCart = [];
+        buttonApi.getPizzas()
+            .success(function(pizzasInCart){
+                //Do Stuff
+                var tempId = pizzasInCart[0].pizzaID;
+                var tempSize = pizzasInCart[0].type;
+                var pizzaShell = {crustSize:"",cheese:"",sauce:"", toppings:[]};
+                for (i = 0; i<pizzasInCart.length; i++){
+
+                    if(pizzasInCart[i].pizzaID == tempId){
+
+                    } else { pizzaShell.crustSize=39630
+                        //update tempID
+                    }
+
+                    var pObject;
+
+
+                    pizzasInCart.push({crustSize: "thick", cheese: "chedder"});
+                }
+
+
+                loading=false;
+            });
     }
 
     function addToCart(itemname, itemtype, pizzaID) {
@@ -258,6 +297,10 @@ function buttonApi($http,apiUrl){
             var url = apiUrl+'/login?username='+username+'&password='+password;
             return $http.get(url);
         },
+        getPizzas: function(){
+            var url = apiUrl+'/getPizzas';
+            return $http.get(url);
+        },
         getSauce: function(){
             var url = apiUrl+'/getSauce';
             return $http.get(url);
@@ -270,8 +313,8 @@ function buttonApi($http,apiUrl){
             var url = apiUrl+'/getSide';
             return $http.get(url);
         },
-        getCart: function(){
-            var url = apiUrl+'/getCart';
+        getCart: function(tablename){
+            var url = apiUrl+'/getCart?tablename='+tablename;
             return $http.get(url);
         },
         addToCart: function(itemname, itemtype, pizzaID){

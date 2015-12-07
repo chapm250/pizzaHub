@@ -63,9 +63,22 @@ app.get("/getDrank", function(req, res){
     })
 });
 
-app.get("/getCart", function(req, res){
-    var sql = 'select * from Josh.shoppingcartbase'
+app.get("/getPizzas", function(req, res){
+    var sql = 'select * from Josh.shoppingcartbase where pizzaID!=0'
     connection.query(sql, function(err, rows, fields){
+        if(err){console.log("we have and error:");
+            console.log(err);
+        } else {
+            res.send(rows);
+        }
+    })
+});
+
+app.get("/getCart", function(req, res){
+    var tablename = req.param('tablename')
+    var sql = 'select * from Josh.shoppingcartbase left join Josh.' + tablename+ ' on Josh.'+ tablename + '.property = Josh.shoppingcartbase.itemname'
+    connection.query(sql, function(err, rows, fields){
+        console.log(sql)
         if(err){console.log("we have and error:");
             console.log(err);
         } else {
@@ -73,8 +86,6 @@ app.get("/getCart", function(req, res){
             res.send(rows);
         }
     })
-
-
 
 });
 
