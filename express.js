@@ -1,8 +1,9 @@
+
 var express=require('express'),
     mysql=require('mysql'),
     credentials=require('./credentials.json'),
     app = express(),
-    port = process.env.PORT || 1338;
+    port =  1338;
     async = require('async');
 
 credentials.host='ids'; //setup database credentials
@@ -140,7 +141,7 @@ app.get("/getPrice", function(req, res){
     var itemname = req.param('itemname');
     var tablename = req.param('tablename');
 
-    var sql = 'select * from Josh.'+ tablename+' where property = "' + itemname + '"';
+    var sql = 'select Dominos, PizzaHut, PapaJohns, Caseys, HungryHowies, PizzaRanch from Josh.'+ tablename+' where property = "' + itemname + '"';
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("fucking error:");
         console.log(err)
