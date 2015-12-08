@@ -77,7 +77,7 @@ app.get("/getPizzas", function(req, res){
 
 app.get("/getCart", function(req, res){
     var tablename = req.param('tablename')
-    var sql = 'select * from Josh.shoppingcartbase left join Josh.' + tablename+ ' on Josh.'+ tablename + '.property = Josh.shoppingcartbase.itemname'
+    var sql = 'select * from Josh.shoppingcartbase left join Josh.' + tablename+ ' on Josh.'+ tablename + '.property = Josh.shoppingcartbase.itemname '
     connection.query(sql, function(err, rows, fields){
         console.log(sql)
         if(err){console.log("we have and error:");
@@ -126,6 +126,22 @@ app.get("/addToCart", function(req, res){
     ])
 })
 
+app.get("/deleteItem", function(req, res){
+    var itemname = req.param('itemname');
+    var pizzaID = req.param('pizzaID')
+    if(pizzaID > 0){
+        var sql = 'delete from Josh.shoppingcartbase where pizzaID = ' + pizzaID;
+    } else {
+        var sql = 'delete from Josh.shoppingcartbase where itemname = "' + itemname + '"'
+    }
+    connection.query(sql, function(err, rows, fields){
+        if(err){console.log("delete sucks");
+        } else {
+            res.send(err)
+        }
+    })
+});
+
 app.get("/getSide", function(req, res){
     var sql = 'select property from Josh.sides'
     connection.query(sql, function(err, rows, fields){
@@ -147,6 +163,17 @@ app.get("/getPrice", function(req, res){
         console.log(err)
         } else {
             res.send(rows[0])
+        }
+    })
+})
+
+app.get("/logout", function(req, res){
+    var sql = 'truncate Josh.shoppingcartbase'
+    connection.query(sql, function(err, rows, fields){
+        if(err){console.log("fuck logout");
+        console.log(err)
+        } else {
+            res.send(err)
         }
     })
 })

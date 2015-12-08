@@ -23,6 +23,8 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.refreshCart=refreshCart;
     $scope.getPrice = getPrice;
     $scope.refreshPizzaCart = refreshPizzaCart;
+    $scope.deleteItem = deleteItem;
+    $scope.logout = logout;
     //constants
     $scope.sizecrust="Choose your Crust";
     $scope.crusttype="";
@@ -49,8 +51,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.drinksItemsInCart=[];
     $scope.sidesItemsInCart=[];
     $scope.pizzasInCart=[];
-    $scope.totalPrices=[];
-    $scope.toppingPrices=[];
+    $scope.totalPrices=[0,0,0,0,0,0];
 
     //$q.defer;
 
@@ -59,6 +60,14 @@ function ButtonCtrl($q, $scope,buttonApi){
 
     var loading = false;
 
+    function logout(){
+        buttonApi.logout()
+            .success(function(){
+                document.getElementsByClassName("loggedout")[0].setAttribute("style", "display:inline;");
+                document.getElementsByClassName("loggedin")[0].setAttribute("style", "display:none;");
+                $scope.currentUser = ""
+            })
+    }
 
     function cheeseSelect(cheese){
        $scope.currentcheese = cheese;
@@ -85,7 +94,8 @@ function ButtonCtrl($q, $scope,buttonApi){
                 $scope.currentUser=data;
                 document.getElementsByClassName("loggedin")[0].setAttribute("style", "display:inline;");
                 document.getElementsByClassName("loggedout")[0].setAttribute("style", "display:none;");
-               // refreshTable();
+                refreshCart();
+                refreshPizzaCart()
             })
             .error(function(){$scope.errorMessage="Unable login";});
     }
@@ -170,18 +180,45 @@ function ButtonCtrl($q, $scope,buttonApi){
         });
     }
 
+    function deleteItem(itemname, pizzaID){
+        buttonApi.deleteItem(itemname, pizzaID)
+            .success(function(data){
+                refreshCart();
+                refreshPizzaCart();
+        }
+        )
+    }
+
     function refreshCart(){
         loading=true;
         $scope.drinksItemsInCart = [];
         $scope.sidesItemsInCart = [];
         buttonApi.getCart("Drinks")
             .success(function(data){
+                $scope.totalPrices=[0,0,0,0,0,0];
+
                 for(i = 0; i < data.length; i++) {
                     if((data[i].type == "drank")){
+                        //console.log(data[i]);
+                        //////Maybe implement this later
+                        //counter=0;
+                        //angular.forEach(data[i], function(column){
+                        //    if(counter >= 5){
+                        //        $scope.totalPrices[counter-5] += column
+                        //    }
+                        //    counter++;
+                        //})
+
+                        $scope.totalPrices[0] += data[i].quantity*data[i].Dominos;
+                        $scope.totalPrices[1] += data[i].quantity*data[i].PizzaHut;
+                        $scope.totalPrices[2] += data[i].quantity*data[i].PapaJohns;
+                        $scope.totalPrices[3] += data[i].quantity*data[i].Caseys;
+                        $scope.totalPrices[4] += data[i].quantity*data[i].HungryHowie;
+                        $scope.totalPrices[5] += data[i].quantity*data[i].PizzaRanch;
                         $scope.drinksItemsInCart.push(data[i]);
                     }
                 }
-                console.log($scope.drinksItemsInCart);
+                console.log($scope.totalPrices);
                 loading=false;
             });
         buttonApi.getCart("sides")
@@ -193,13 +230,13 @@ function ButtonCtrl($q, $scope,buttonApi){
                     }
 
                 }
-                console.log($scope.sidesItemsInCart);
                 loading=false;
             });
 
     }
 
     function refreshPizzaCart(){
+        console.log("refreshpizza cart");
         loading=true;
         $scope.pizzasInCart = [];
         buttonApi.getPizzas()
@@ -209,8 +246,10 @@ function ButtonCtrl($q, $scope,buttonApi){
                 var tempSize = pizzasInDB[0].type;
                 var pizzaShell = {};
                 pizzaShell.toppings = [];
-                pizzaShell.prices = [];
-                pizzaShell.crust = pizzasInDB[0].itemname + " " + pizzasInDB[0].type;
+                pizzaShell.prices = [0,0,0,0,0,0];
+                pizzaShell.crust = pizzasInDB[0].itemname;
+                pizzaShell.pizzaID = tempId;
+                pizzaShell.size = tempSize;
                 for (i = 1; i<pizzasInDB.length; i++){
 
                     if(pizzasInDB[i].pizzaID == tempId){
@@ -229,48 +268,44 @@ function ButtonCtrl($q, $scope,buttonApi){
 
                     } else {
                         $scope.pizzasInCart.push(pizzaShell);
-                        console.log($scope.pizzasInCart);
 
                         tempId = pizzasInDB[i].pizzaID;
                         tempSize = pizzasInDB[i].type;
                         pizzaShell= {};
                         pizzaShell.toppings = [];
-                        pizzaShell.prices = [];
-                        pizzaShell.crust = pizzasInDB[i].itemname + " " + pizzasInDB[i].type;
-                        //pizzaShell.prices = getPrices(pizzasInDB[i].itemname, tempSize)
+                        pizzaShell.prices = [0,0,0,0,0,0];
+                        pizzaShell.crust = pizzasInDB[i].itemname;
+                        pizzaShell.pizzaID = tempId;
+                        pizzaShell.size = tempSize;
 
                     }
-
-
                 }
                 $scope.pizzasInCart.push(pizzaShell);
 
                 //get prices
                 var toppings = [];
 
-                for (i = 0; i < $scope.pizzasInCart.length - 1; i++){
+                for (i = 0; i < $scope.pizzasInCart.length; i++){
 
-
+                    getPrice($scope.pizzasInCart[i].crust, $scope.pizzasInCart[i].size, i);
                     toppings = $scope.pizzasInCart[i].toppings;
-                    for (i = 0; i<toppings.length; i++){
-
+                    for (j = 0; j<toppings.length; j++){
+                            getPrice($scope.pizzasInCart[i].toppings[j], $scope.pizzasInCart[i].size, i);
                     }
-
-
                 }
-
-
                 loading=false;
             });
     }
 
-    function addToCart(itemname, itemtype, pizzaID) {
+    function addToCart(itemname, itemtype, pizzaID, toRefresh) {
         buttonApi.addToCart(itemname, itemtype, pizzaID)
             .success(function(){
                 if(pizzaID==0){
                     refreshCart();
                 }
-
+                if (toRefresh){
+                    refreshPizzaCart();
+                }
 
             })
 
@@ -278,34 +313,19 @@ function ButtonCtrl($q, $scope,buttonApi){
     }
     function addPizzaToCart(){
 
-        //Want to implement the below, need to figure how to import async
+        var toRefresh = false;
 
-        //$scope.async.series([
-        //   function(callback){
-        //       addToCart($scope.crusttype, $scope.pizzaSize, $scope.pizzaID);
-        //       callback();
-        //   },
-        //    function(callback){
-        //        addToCart($scope.currentsauce, 'sauce', $scope.pizzaID);
-        //        callback();
-        //    },
-        //    function(callback){
-        //        addToCart($scope.currentcheese, 'cheese', $scope.pizzaID);
-        //        callback();
-        //    },
-        //    function(callback){
-        //        for (i = 0; i < $scope.currenttopping.length; i++){
-        //            addToCart($scope.currenttopping[i], $scope.pizzaSize, $scope.pizzaID);
-        //        }
-        //    }
-        //
-        //]);
-
-        addToCart($scope.crusttype, $scope.pizzaSize, $scope.pizzaID);
-        addToCart($scope.currentsauce, 'sauce', $scope.pizzaID);
-        addToCart($scope.currentcheese, 'cheese', $scope.pizzaID);
+        addToCart($scope.crusttype, $scope.pizzaSize, $scope.pizzaID, toRefresh);
+        addToCart($scope.currentsauce, 'sauce', $scope.pizzaID, toRefresh);
+        if ($scope.currenttopping.length == 0){
+            toRefresh = true;
+        }
+        addToCart($scope.currentcheese, 'cheese', $scope.pizzaID, toRefresh);
         for (i = 0; i < $scope.currenttopping.length; i++){
-            addToCart($scope.currenttopping[i], $scope.pizzaSize, $scope.pizzaID);
+            if (i == $scope.currenttopping.length-1){
+                toRefresh = true;
+            }
+            addToCart($scope.currenttopping[i], $scope.pizzaSize, $scope.pizzaID, toRefresh);
         }
         $scope.pizzaID++;
 
@@ -316,16 +336,27 @@ function ButtonCtrl($q, $scope,buttonApi){
             nonmeat.selected = false;
         })
         $scope.currenttopping = [];
-        refreshPizzaCart();
+        //refreshPizzaCart();
 
     }
 
 
-    function getPrice(itemname, tablename){
+    function getPrice(itemname, tablename, pizzaIndex){
         buttonApi.getPrice(itemname, tablename)
-            .success(function(prices){
-                console.log("getprice ");
-                 $scope.pizzasInCart[x].prices =  prices;
+            .success(function(pricesDB){
+                counter = 0;
+                angular.forEach(pricesDB, function(store){
+                   if (store == null || store == 0 || typeof $scope.pizzasInCart[pizzaIndex].prices[counter] === 'string'){
+                       $scope.pizzasInCart[pizzaIndex].prices[counter] = "N/A";
+                       $scope.totalPrices[counter] = "N/A";
+                       counter++;
+                   } else {
+                       $scope.pizzasInCart[pizzaIndex].prices[counter] += store;
+                       $scope.totalPrices[counter] += store;
+                       counter++;
+                   }
+                });
+
             });
             //.error(function(){console.log("error")});
         //return defer.promise.$$state;
@@ -353,10 +384,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     findLastPizzaID();
 
 
-
 }
-
-
 
 
 
@@ -405,6 +433,14 @@ function buttonApi($http,apiUrl){
         },
         getPrice: function(itemname, tablename){
             var url = apiUrl+'/getPrice?itemname=' + itemname+'&tablename='+tablename;
+            return $http.get(url);
+        },
+        deleteItem: function(itemname, pizzaID){
+            var url = apiUrl+'/deleteItem?itemname=' + itemname+'&pizzaID=' + pizzaID;
+            return $http.get(url);
+        },
+        logout: function(){
+            var url = apiUrl+'/logout';
             return $http.get(url);
         }
 

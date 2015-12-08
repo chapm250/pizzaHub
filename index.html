@@ -77,7 +77,7 @@
 
 
     <div class="loggedin" style="display: inline">
-        <button style="position: absolute; right:0px">Log Out</button>
+        <button ng-click = "logout()" style="position: absolute; right:0px">Log Out</button>
 
         <div class="main" style="width: 75%; float: left">
 
@@ -194,13 +194,13 @@
             <div id="sides" class="tab-pane fade">
                 <h3>Sides</h3>
                 <div ng-repeat = "side in sidesArray" style="display: inline; padding-left: 25px; padding-top: 10px">
-                    <button ng-click="addToCart(side.property, 'side',0)" class = "btn btn-default" >{{side.property}}</button>
+                    <button ng-click="addToCart(side.property, 'side',0, true)" class = "btn btn-default" >{{side.property}}</button>
                 </div>
             </div>
             <div id="drinks" class="tab-pane fade">
                 <h3>Drinks</h3>
                 <div ng-repeat = "drank in drinksArray" style="display: inline; padding-left: 25px; padding-top: 10px">
-                    <button ng-click="addToCart(drank.property, 'drank',0)" class = "btn btn-default" style="">{{drank.property}}</button>
+                    <button ng-click="addToCart(drank.property, 'drank',0, true)" class = "btn btn-default" style="">{{drank.property}}</button>
                 </div>
             </div>
         </div>
@@ -216,22 +216,38 @@
 
         <!--</table>-->
         <!--<h3>{{getPrice('Mountain Dew')}}</h3>-->
+        <div ng-repeat="pizza in pizzasInCart" >
+            <button  ng-click="deleteItem('penis', pizza.pizzaID)" class = "glyphicon glyphicon-remove" style="background-color: red"></button> <label>{{pizza.size}} {{pizza.crust}}</label>
+            <label>{{pizza.sauce}}</label>
+            <label>{{pizza.cheese}}</label>
+            <div ng-repeat="topping in pizza.toppings" >
+                <label>{{topping}}</label>
+            </div>
+            <label ng-hide = "pizza.prices[0] == 0 || pizza.prices[0] == 'N/A'">Dominos= ${{pizza.prices[0]}}</label>
+            <label ng-hide = "pizza.prices[1] == 0 || pizza.prices[1] == 'N/A'">PizzaHut= ${{pizza.prices[1]}}</label>
+            <label ng-hide = "pizza.prices[2] == 0 || pizza.prices[2] == 'N/A'">PapaJohns= ${{pizza.prices[2]}}</label>
+            <label ng-hide = "pizza.prices[3] == 0 || pizza.prices[3] == 'N/A'">Caseys= ${{pizza.prices[3]}}</label>
+            <label ng-hide = "pizza.prices[4] == 0 || pizza.prices[4] == 'N/A'">HungryHowie's= ${{pizza.prices[4]}}</label>
+            <label ng-hide = "pizza.prices[5] == 0 || pizza.prices[5] == 'N/A'">PizzaRanch= ${{pizza.prices[5]}}</label>
+        </div>
+
 
         <div ng-repeat="drink in drinksItemsInCart">
 
-        <table  class ="table" style="">
+         <table  class ="table" style="">
 
             <tr >
-                <td>{{drink.quantity}} {{drink.itemname}}s</td>
+                <td> <button ng-click="deleteItem(drink.itemname, 0)" class = "glyphicon glyphicon-remove" style="background-color: red"> </button>  {{drink.quantity}} {{drink.itemname}}s</td>
 
             </tr>
             <tr>
-                <td>${{drink.Dominos}} ${{drink.PizzaHut}} ${{drink.PapaJohn}} ${{drink.Caseys}} ${{drink.HungryHowie}} ${{drink.PizzaRanch}}</td>
-                <!--<td>${{drink.PizzaHut}}</td>-->
-                <!--<td>${{drink.PapaJohn}}</td>-->
-                <!--<td>${{drink.Caseys}}</td>-->
-                <!--<td>${{drink.HungryHowie}}</td>-->
-                <!--<td>${{drink.PizzaRanch}}</td>-->
+                <!--<td>Dominos = ${{drink.Dominos}} ${{drink.PizzaHut}} ${{drink.PapaJohn}} ${{drink.Caseys}} ${{drink.HungryHowie}} ${{drink.PizzaRanch}}</td>-->
+                <label ng-hide = "drink.Dominos == null">Dominos= ${{drink.Dominos}}</label>
+                <label ng-hide = "drink.PizzaHut == null">PizzaHut= ${{drink.PizzaHut}}</label>
+                <label ng-hide = "drink.PapaJohns == null">PapaJohns= ${{drink.PapaJohns}}</label>
+                <label ng-hide = "drink.Caseys == null">Caseys= ${{drink.Caseys}}</label>
+                <label ng-hide = "drink.HungryHowie == null">HungryHowie's= ${{drink.HungryHowie}}</label>
+                <label ng-hide = "drink.PizzaRanch == null">PizzaRanch= ${{drink.PizzaRanch}}</label>
 
             </tr>
 
@@ -244,14 +260,27 @@
             <table  class ="table" style="">
 
                 <tr >
-                    <td>{{side.quantity}} {{side.itemname}}s</td>
+                    <td><button ng-click="deleteItem(side.itemname, 0)" class = "glyphicon glyphicon-remove" style="background-color: red"></button> {{side.quantity}} {{side.itemname}}s</td>
 
                 </tr>
                 <tr>
-                    <td>${{side.Dominos}} ${{side.PizzaHut}} ${{side.PapaJohn}} ${{side.Caseys}} ${{side.HungryHowie}} ${{side.PizzaRanch}}</td>
+                    <!--<td>${{side.Dominos}} ${{side.PizzaHut}} ${{side.PapaJohn}} ${{side.Caseys}} ${{side.HungryHowie}} ${{side.PizzaRanch}}</td>-->
+                    <label ng-hide = "side.Dominos == null">Dominos= ${{side.Dominos}}</label>
+                    <label ng-hide = "side.PizzaHut == null">PizzaHut= ${{side.PizzaHut}}</label>
+                    <label ng-hide = "side.PapaJohns == null">PapaJohns= ${{side.PapaJohns}}</label>
+                    <label ng-hide = "side.Caseys == null">Caseys= ${{side.Caseys}}</label>
+                    <label ng-hide = "side.HungryHowie == null">HungryHowie's= ${{side.HungryHowie}}</label>
+                    <label ng-hide = "side.PizzaRanch == null">PizzaRanch= ${{side.PizzaRanch}}</label>
                 </tr>
             </table>
         </div>
+        <h1>Total</h1>
+        <label ng-hide = "totalPrices[0] == 0 || totalPrices[0].indexOf('N/A') ==0 ">Dominos= ${{totalPrices[0]}}</label>
+        <label ng-hide = "totalPrices[1] == 0 || totalPrices[1].indexOf('N/A') ==0 ">PizzaHut= ${{totalPrices[1]}}</label>
+        <label ng-hide = "totalPrices[2] == 0 || totalPrices[2].indexOf('N/A') ==0 ">PapaJohns= ${{totalPrices[2]}}</label>
+        <label ng-hide = "totalPrices[3] == 0 || totalPrices[3].indexOf('N/A') ==0 ">Caseys= ${{totalPrices[3]}}</label>
+        <label ng-hide = "totalPrices[4] == 0 || totalPrices[4].indexOf('N/A') ==0 ">HungryHowie's= ${{totalPrices[4]}}</label>
+        <label ng-hide = "totalPrices[5] == 0 || totalPrices[5].indexOf('N/A') ==0 ">PizzaRanch= ${{totalPrices[5]}}</label>
 
 
     </div>
