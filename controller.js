@@ -439,6 +439,7 @@ function ButtonCtrl($q, $scope,buttonApi){
             nonmeat.selected = false;
         })
         $scope.currenttopping = [];
+        $scope.currenttoppingNic = [];
         //refreshPizzaCart();
 
     }
