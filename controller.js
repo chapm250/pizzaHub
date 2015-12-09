@@ -62,6 +62,7 @@ function ButtonCtrl($q, $scope,buttonApi){
 
 
 
+
     //$q.defer;
 
 
@@ -319,55 +320,58 @@ function ButtonCtrl($q, $scope,buttonApi){
                 for(i = 0; i < 6; i++){
                     $scope.totalPrices[i]+=$scope.dsTotalPrices[i];
                 }
-                var tempId = pizzasInDB[0].pizzaID;
-                var tempSize = pizzasInDB[0].type;
-                var pizzaShell = {};
-                pizzaShell.toppings = [];
-                pizzaShell.prices = [0,0,0,0,0,0];
-                pizzaShell.crust = pizzasInDB[0].itemname;
-                pizzaShell.pizzaID = tempId;
-                pizzaShell.size = tempSize;
-                for (i = 1; i<pizzasInDB.length; i++){
+                if (pizzasInDB.length != 0) {
+                    var tempId = pizzasInDB[0].pizzaID;
+                    var tempSize = pizzasInDB[0].type;
+                    var pizzaShell = {};
+                    pizzaShell.toppings = [];
+                    pizzaShell.prices = [0, 0, 0, 0, 0, 0];
+                    pizzaShell.crust = pizzasInDB[0].itemname;
+                    pizzaShell.pizzaID = tempId;
+                    pizzaShell.size = tempSize;
+                    for (i = 1; i < pizzasInDB.length; i++) {
 
-                    if(pizzasInDB[i].pizzaID == tempId){
-                        if(pizzasInDB[i].type == "sauce"){
-                            pizzaShell.sauce = pizzasInDB[i].itemname;
+                        if (pizzasInDB[i].pizzaID == tempId) {
+                            if (pizzasInDB[i].type == "sauce") {
+                                pizzaShell.sauce = pizzasInDB[i].itemname;
+                            }
+                            if (pizzasInDB[i].type == "cheese") {
+                                pizzaShell.cheese = pizzasInDB[i].itemname;
+                            }
+                            if ((pizzasInDB[i].type != "sauce") && (pizzasInDB[i].type != "cheese")) {
+                                pizzaShell.toppings.push(pizzasInDB[i].itemname);
+                            }
+
+
+                            //pizzaShell.sauce =
+
+                        } else {
+                            $scope.pizzasInCart.push(pizzaShell);
+
+                            tempId = pizzasInDB[i].pizzaID;
+                            tempSize = pizzasInDB[i].type;
+                            pizzaShell = {};
+                            pizzaShell.toppings = [];
+                            pizzaShell.prices = [0, 0, 0, 0, 0, 0];
+                            pizzaShell.crust = pizzasInDB[i].itemname;
+                            pizzaShell.pizzaID = tempId;
+                            pizzaShell.size = tempSize;
+
                         }
-                        if(pizzasInDB[i].type == "cheese"){
-                            pizzaShell.cheese = pizzasInDB[i].itemname;
-                        }
-                        if((pizzasInDB[i].type !="sauce") && (pizzasInDB[i].type !="cheese")){
-                            pizzaShell.toppings.push(pizzasInDB[i].itemname);
-                        }
-
-
-                        //pizzaShell.sauce =
-
-                    } else {
-                        $scope.pizzasInCart.push(pizzaShell);
-
-                        tempId = pizzasInDB[i].pizzaID;
-                        tempSize = pizzasInDB[i].type;
-                        pizzaShell= {};
-                        pizzaShell.toppings = [];
-                        pizzaShell.prices = [0,0,0,0,0,0];
-                        pizzaShell.crust = pizzasInDB[i].itemname;
-                        pizzaShell.pizzaID = tempId;
-                        pizzaShell.size = tempSize;
-
                     }
-                }
-                $scope.pizzasInCart.push(pizzaShell);
 
-                //get prices
-                var toppings = [];
+                    $scope.pizzasInCart.push(pizzaShell);
 
-                for (i = 0; i < $scope.pizzasInCart.length; i++){
+                    //get prices
+                    var toppings = [];
 
-                    getPrice($scope.pizzasInCart[i].crust, $scope.pizzasInCart[i].size, i);
-                    toppings = $scope.pizzasInCart[i].toppings;
-                    for (j = 0; j<toppings.length; j++){
+                    for (i = 0; i < $scope.pizzasInCart.length; i++) {
+
+                        getPrice($scope.pizzasInCart[i].crust, $scope.pizzasInCart[i].size, i);
+                        toppings = $scope.pizzasInCart[i].toppings;
+                        for (j = 0; j < toppings.length; j++) {
                             getPrice($scope.pizzasInCart[i].toppings[j], $scope.pizzasInCart[i].size, i);
+                        }
                     }
                 }
 
