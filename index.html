@@ -97,9 +97,42 @@
                         </ul>
 
                         <h3>Current Pizza Selection</h3>
-                        <div>
-                            <label ng-show = "crusttype == 'thick crust' || crusttype == 'pan crust' || crusttype == 'hand tossed' || crusttype == 'gluten free crust'"><img id="thick" src="http://www.pizzahut.com/assets/w/evo_pb/crust/crust_pan_NoFinish.png" alt="hehe" height="300" width="300"></label>
+                        <div class="Pizza">
+                            <!--CRUST-->
+                            <label><img class="hehe" src="http://www.pizzahut.com/assets/w/evo_pb/crust/crust_thin_NoFinish.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "crusttype == 'pan crust' || crusttype == 'hand tossed'"><img class="crust" src="http://www.pizzahut.com/assets/w/evo_pb/crust/crust_pan_NoFinish.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "crusttype == 'thick crust' || crusttype == 'deep dish crust' " ><img class="crust" src="https://www.pizzahut.com/assets/w/evo_pb/crust/crust_handtossed_smokehouseBBQ.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "crusttype == 'thin crust' || crusttype == 'gluten free crust'" ><img class="crust" src="http://www.pizzahut.com/assets/w/evo_pb/crust/crust_thin_NoFinish.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currentsauce == 'Tomato sauce' || currentsauce == 'Marinara sauce' " ><img class="sauce" src="https://www.pizzahut.com/assets/w/evo_pb/topping/sauce_Marinara_ML.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currentsauce == 'Parmesan sauce' || currentsauce == 'Alfredo sauce' " ><img class="sauce" src="https://www.pizzahut.com/assets/w/evo_pb/topping/sauce_CreamyGarlicParm_ML.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currentsauce == 'BBQ sauce' " ><img class="sauce" src="https://www.pizzahut.com/assets/w/evo_pb/topping/sauce_BBQ_ML.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currentsauce == 'siracha sauce' || currentsauce == 'buffalo sauce' " ><img class="sauce" src="https://www.pizzahut.com/assets/w/evo_pb/topping/sauce_HoneySriracha_ML.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currentcheese == 'Mozzarella Cheese' || currentcheese == 'Cheddar Cheese'|| currentcheese == 'Provolone Cheese' " ><img class="cheese" src="https://www.pizzahut.com/assets/w/evo_pb/topping/cheese_mozz_ML.png" alt="hehe" height="300" width="300"></label>
+
+                            <!--MEAT-->
+                            <label ng-show = "currenttoppingNic.indexOf('pepperoni') > -1 " ><img class="meat" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Pepperoni_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('sausage') > -1 " ><img class="meat" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_ItalianSausage_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('salami') > -1 " ><img class="meat" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Salami_ML_regular.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('ham') > -1 " ><img class="meat" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Ham_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('beef') > -1 " ><img class="meat" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Beef_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('pork') > -1 " ><img class="meat" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Pork_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('bacon') > -1 " ><img class="meat" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Bacon_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('chicken') > -1 " ><img class="meat" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Chicken_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('meatball') > -1 " ><img class="meat" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Meatball_ML_reg.png" alt="hehe" height="300" width="300"></label>
                             <!--<label ng-show = "crustarray[2] = true"><img id="thick" src="http://www.pizzahut.com/assets/w/evo_pb/crust/crust_pan_NoFinish.png" alt="hehe" height="300" width="300"></label>-->
+
+                            <!--VEG-->
+                            <label ng-show = "currenttoppingNic.indexOf('spinach') > -1 " ><img class="veg" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Spinach_Fresh_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('bananna pepper') > -1 " ><img class="veg" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_BananaPepper_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('mushroom') > -1 " ><img class="veg" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Mushroom_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('red pepper') > -1 || currenttoppingNic.indexOf('cherry peppers') > -1 " ><img class="veg" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_CherryPepper_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('onion') > -1 " ><img class="veg" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Onion_red_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('black olives') > -1 " ><img class="veg" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Olives_black_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('green pepper') > -1 " ><img class="veg" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_GreenBellPepper_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('pineapple') > -1 " ><img class="veg" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Pineapple_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('jalapeno peppers') > -1 " ><img class="veg" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Jalepeno_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('tomato') > -1 " ><img class="veg" src="https://www.pizzahut.com/assets/w/evo_pb/topping/topping_Tomato_ML_reg.png" alt="hehe" height="300" width="300"></label>
+                            <label ng-show = "currenttoppingNic.indexOf('hot sauce') > -1 " ><img class="veg" src="http://www.pizzahut.com/assets/w/evo_pb/topping/drizzle_HoneySriracha_ML.png" alt="hehe" height="300" width="300"></label>
 
                         </div>
                         <br>
