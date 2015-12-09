@@ -100,7 +100,13 @@
                         <img scr="/crust.png">
 
 
-                        <label>{{sizecrust}}</label>  <label>Crust Prices: Dominos=${{selection[0].Dominos}} PizzaHut=${{selection[0].PizzaHut}} PapaJohns=${{selection[0].PapaJohns}}  Caseys=${{selection[0].Caseys}}  HungryHowies=${{selection[0].HungryHowies}}  PizzaRanch=${{selection[0].PizzaRanch}} </label>
+                        <!--<label>{{sizecrust}}</label>  <label>Crust Prices: Dominos=${{selection[0].Dominos}} PizzaHut=${{selection[0].PizzaHut}} PapaJohns=${{selection[0].PapaJohns}}  Caseys=${{selection[0].Caseys}}  HungryHowies=${{selection[0].HungryHowies}}  PizzaRanch=${{selection[0].PizzaRanch}} </label>-->
+                        <label ng-hide = "selection[0].Dominos == null">Dominos=${{selection[0].Dominos}} </label>
+                        <label ng-hide = "selection[0].PizzaHut == null">PizzaHut=${{selection[0].PizzaHut}} </label>
+                        <label ng-hide = "selection[0].PapaJohns == null">PapaJohns=${{selection[0].PapaJohns}} </label>
+                        <label ng-hide = "selection[0].Caseys == null">Casey's=${{selection[0].Caseys}} </label>
+                        <label ng-hide = "selection[0].HungryHowies == null">HungryHowie's=${{selection[0].HungryHowies}} </label>
+                        <label ng-hide = "selection[0].PizzaRanch == null">PizzaRanch=${{selection[0].PizzaRanch}} </label>
                         <div>
 
                         </div>
@@ -112,13 +118,27 @@
                         <h5><b>Toppings: </b></h5>
                         <div ng-repeat="topping in currenttopping">
 
-                            <label style="padding-left: 10px">{{topping.name}} prices:  Dominos=${{selection[topping.id].Dominos}} PizzaHut=${{selection[topping.id].PizzaHut}} PapaJohns=${{selection[topping.id].PapaJohns}} Caseys=${{selection[topping.id].Caseys}} HungrieHowies=${{selection[topping.id].HungryHowies}} PizzaRanch=${{selection[topping.id].PizzaRanch}}</label>
+                            <!--<label style="padding-left: 10px">{{topping.name}} prices:  Dominos=${{selection[topping.id].Dominos}} PizzaHut=${{selection[topping.id].PizzaHut}} PapaJohns=${{selection[topping.id].PapaJohns}} Caseys=${{selection[topping.id].Caseys}} HungrieHowies=${{selection[topping.id].HungryHowies}} PizzaRanch=${{selection[topping.id].PizzaRanch}}</label>-->
+                            <label style="padding-left: 10px">{{topping.name}}</label>
+                            <label ng-hide = "selection[topping.id].Dominos == null">Dominos: ${{selection[topping.id].Dominos}} </label>
+                            <label ng-hide = "selection[topping.id].PizzaHut == null">PizzaHut: ${{selection[topping.id].PizzaHut}} </label>
+                            <label ng-hide = "selection[topping.id].PapaJohns == null">PapaJohns: ${{selection[topping.id].PapaJohns}} </label>
+                            <label ng-hide = "selection[topping.id].Caseys == null">Casey's: ${{selection[topping.id].Caseys}} </label>
+                            <label ng-hide = "selection[topping.id].HungryHowies == null">HungryHowie's: ${{selection[topping.id].HungryHowies}} </label>
+                            <label ng-hide = "selection[topping.id].PizzaRanch == null">PizzaRanch: ${{selection[topping.id].PizzaRanch}} </label>
                         </div>
 
 
                         <br>
                         <br>
-                        <label>Total Pizza Cost: Dominos=${{currentPizzaPrices[0]}} PizzaHut=${{currentPizzaPrices[1]}} PapaJohns=${{currentPizzaPrices[2]}} Caseys=${{currentPizzaPrices[3]}} HungryHowies=${{currentPizzaPrices[4]}} PizzaRanch=${{currentPizzaPrices[5]}}</label>
+                        <label>TOTAL:</label>
+                        <!--<label>Total Pizza Cost: Dominos=${{currentPizzaPrices[0]}} PizzaHut=${{currentPizzaPrices[1]}} PapaJohns=${{currentPizzaPrices[2]}} Caseys=${{currentPizzaPrices[3]}} HungryHowies=${{currentPizzaPrices[4]}} PizzaRanch=${{currentPizzaPrices[5]}}</label>-->
+                        <label ng-hide = "currentPizzaPrices[0] == 'N/A'">Dominos=${{currentPizzaPrices[0].toFixed(2)}} </label>
+                        <label ng-hide = "currentPizzaPrices[1] == 'N/A'">PizzaHut=${{currentPizzaPrices[1].toFixed(2)}} </label>
+                        <label ng-hide = "currentPizzaPrices[2] == 'N/A'">PapaJohns=${{currentPizzaPrices[2].toFixed(2)}} </label>
+                        <label ng-hide = "currentPizzaPrices[3] == 'N/A'">Casey's=${{currentPizzaPrices[3].toFixed(2)}} </label>
+                        <label ng-hide = "currentPizzaPrices[4] == 'N/A'">HungryHowie's=${{currentPizzaPrices[4].toFixed(2)}} </label>
+                        <label ng-hide = "currentPizzaPrices[5] == 'N/A'">PizzaRanch=${{currentPizzaPrices[5].toFixed(2)}} </label>
                         <br>
                         <button style="left:100px" ng-click="addCrustToCart()" >Add To Cart</button>
 
@@ -236,12 +256,12 @@
                 <div ng-repeat="topping in pizza.toppings" >
                     <label>{{topping}}</label>
                 </div>
-                <label ng-hide = "pizza.prices[0] == 0 || pizza.prices[0] == 'N/A'">Dominos= ${{pizza.prices[0]}}</label>
-                <label ng-hide = "pizza.prices[1] == 0 || pizza.prices[1] == 'N/A'">PizzaHut= ${{pizza.prices[1]}}</label>
-                <label ng-hide = "pizza.prices[2] == 0 || pizza.prices[2] == 'N/A'">PapaJohns= ${{pizza.prices[2]}}</label>
-                <label ng-hide = "pizza.prices[3] == 0 || pizza.prices[3] == 'N/A'">Caseys= ${{pizza.prices[3]}}</label>
-                <label ng-hide = "pizza.prices[4] == 0 || pizza.prices[4] == 'N/A'">HungryHowie's= ${{pizza.prices[4]}}</label>
-                <label ng-hide = "pizza.prices[5] == 0 || pizza.prices[5] == 'N/A'">PizzaRanch= ${{pizza.prices[5]}}</label>
+                <label ng-hide = "pizza.prices[0] == 0 || pizza.prices[0] == 'N/A'">Dominos= ${{pizza.prices[0].toFixed(2)}}</label>
+                <label ng-hide = "pizza.prices[1] == 0 || pizza.prices[1] == 'N/A'">PizzaHut= ${{pizza.prices[1].toFixed(2)}}</label>
+                <label ng-hide = "pizza.prices[2] == 0 || pizza.prices[2] == 'N/A'">PapaJohns= ${{pizza.prices[2].toFixed(2)}}</label>
+                <label ng-hide = "pizza.prices[3] == 0 || pizza.prices[3] == 'N/A'">Caseys= ${{pizza.prices[3].toFixed(2)}}</label>
+                <label ng-hide = "pizza.prices[4] == 0 || pizza.prices[4] == 'N/A'">HungryHowie's= ${{pizza.prices[4].toFixed(2)}}</label>
+                <label ng-hide = "pizza.prices[5] == 0 || pizza.prices[5] == 'N/A'">PizzaRanch= ${{pizza.prices[5].toFixed(2)}}</label>
             </div>
 
 
@@ -288,12 +308,12 @@
                 </table>
             </div>
             <h1>Total</h1>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[0] == 0 || totalPrices[0].indexOf('N/A') ==0 ">Dominos= ${{totalPrices[0]}}</button>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[1] == 0 || totalPrices[1].indexOf('N/A') ==0 ">PizzaHut= ${{totalPrices[1]}}</button>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[2] == 0 || totalPrices[2].indexOf('N/A') ==0 ">PapaJohns= ${{totalPrices[2]}}</button>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[3] == 0 || totalPrices[3].indexOf('N/A') ==0 ">Caseys= ${{totalPrices[3]}}</button>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[4] == 0 || totalPrices[4].indexOf('N/A') ==0 ">HungryHowie's= ${{totalPrices[4]}}</button>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[5] == 0 || totalPrices[5].indexOf('N/A') ==0 ">PizzaRanch= ${{totalPrices[5]}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[0] == 0 || totalPrices[0].indexOf('N/A') ==0 "><img src="http://blogs-images.forbes.com/stevedenning/files/2011/03/256px-Dominos_pizza_logo.svg_.png" alt="Dominos" height="60" width="60"> ${{totalPrices[0].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[1] == 0 || totalPrices[1].indexOf('N/A') ==0 "><img src="https://static-s.aa-cdn.net/img/ios/881318556/0a98043e59bf8e74486ddfcf014cb328?v=1" alt="PizzaHut" height="60" width="60"> ${{totalPrices[1].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[2] == 0 || totalPrices[2].indexOf('N/A') ==0 "><img src="http://file.answcdn.com/answ-cld/image/upload/v1/tk/brand_image/2957f6a1/2d12d3fa2ffffd5ce43b72fb89f441b2c25ae451.png" alt="PapaJohns" height="60" width="60">  ${{totalPrices[2].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[3] == 0 || totalPrices[3].indexOf('N/A') ==0 "><img src="http://wac.450f.edgecastcdn.net/80450F/khak.com/files/2014/11/caseys.jpg" alt="Casey's" height="60" width="60">  ${{totalPrices[3].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[4] == 0 || totalPrices[4].indexOf('N/A') ==0 "><img src="http://www.visitsouthwalton.com/sites/default/master/files/profiles/photos/profile_logo/Howie_Logo_20100.png" alt="HungryHowie's" height="60" width="60">  ${{totalPrices[5].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[5] == 0 || totalPrices[5].indexOf('N/A') ==0 "><img src="https://www.rabezauction.com/images/Pizza-Ranch-Lg1.jpg" alt="PizzaRanch" height="60" width="60">  ${{totalPrices[5].toFixed(2)}}</button>
 
 
         </div>
