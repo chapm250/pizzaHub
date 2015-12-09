@@ -129,15 +129,6 @@ function ButtonCtrl($q, $scope,buttonApi){
     }
 
 
-    //function updatePizzaSelection(){
-    //   // buttonApi.getPrice()
-    //    $scope.selection.crust = $scope.crusttype;
-    //    $scope.selection.cheese = $scope.currentcheese;
-    //    $scope.selection.sauce = $scope.currentsauce;
-    //    $scope.selection.toppings = $scope.currenttopping;
-    //
-    //
-    //}
 
 
     function getShit(){
@@ -205,8 +196,10 @@ function ButtonCtrl($q, $scope,buttonApi){
             if (nonmeat.selected == true){
                 $scope.currenttopping.push({name: nonmeat.property, id: counter});
                 getSelectionPrices(nonmeat.property, $scope.pizzaSize,counter);
+                counter++;
             }
         });
+        getSelectionPrices($scope.crusttype,$scope.pizzaSize,0);
         //updatePizzaSelection();
     }
 
@@ -228,7 +221,6 @@ function ButtonCtrl($q, $scope,buttonApi){
     }
 
     function refreshCart(){
-        console.log("droinks and sides");
         loading=true;
         $scope.drinksItemsInCart = [];
         $scope.sidesItemsInCart = [];
@@ -238,7 +230,6 @@ function ButtonCtrl($q, $scope,buttonApi){
 
                 for(i = 0; i < data.length; i++) {
                     if((data[i].type == "drank")){
-                        //console.log(data[i]);
                         //////Maybe implement this later
                         //counter=0;
                         //angular.forEach(data[i], function(column){
@@ -257,7 +248,6 @@ function ButtonCtrl($q, $scope,buttonApi){
                         $scope.drinksItemsInCart.push(data[i]);
                     }
                 }
-                console.log($scope.totalPrices);
                 loading=false;
             });
         buttonApi.getCart("sides")
@@ -395,14 +385,7 @@ function ButtonCtrl($q, $scope,buttonApi){
 
     }
 
-    //function currentTotal(store){
-    //    sum = 0;
-    //    for(i = 0; i < $scope.selection.length; i++){
-    //        sum += $scope.selection[i].Dominos;
-    //    }
-    //    console.log("sum =  " + sum);
-    //    return sum;
-    //}
+
 
     function getSelectionPrices(itemname, size, spot){
         buttonApi.getPrice(itemname, size)
@@ -447,10 +430,8 @@ function ButtonCtrl($q, $scope,buttonApi){
                 });
 
             });
-            //.error(function(){console.log("error")});
         //return defer.promise.$$state;
     }
-    //console.log(getPrice("pan crust", "10in").$$state.value);
 
     function findLastPizzaID(){
         buttonApi.getPizzas()
