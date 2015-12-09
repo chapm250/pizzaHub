@@ -56,7 +56,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.pizzasInCart=[];
     $scope.totalPrices=[0,0,0,0,0,0];
     $scope.dsTotalPrices=[0,0,0,0,0,0];
-    $scope.currentPizzaPrices=[0,0,0,0,0,0];
+    $scope.currentPizzaPrices=[12.99,10.00,14.99,11.99,9.00,13.99];
     $scope.selection=[];
 
 
@@ -319,8 +319,6 @@ function ButtonCtrl($q, $scope,buttonApi){
                 for(i = 0; i < 6; i++){
                     $scope.totalPrices[i]+=$scope.dsTotalPrices[i];
                 }
-                console.log($scope.totalPrices);
-                console.log($scope.totalPrices[1].indexOf('N/A'));
                 var tempId = pizzasInDB[0].pizzaID;
                 var tempSize = pizzasInDB[0].type;
                 var pizzaShell = {};
