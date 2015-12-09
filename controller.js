@@ -57,7 +57,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.totalPrices=[0,0,0,0,0,0];
     $scope.currentPizzaPrices=[0,0,0,0,0,0];
     $scope.selection=[];
-    $scope.totalRefreshed=0;
+
 
 
 
@@ -275,8 +275,6 @@ function ButtonCtrl($q, $scope,buttonApi){
     }
 
     function refreshPizzaCart(){
-        $scope.totalRefreshed++;
-        console.log($scope.totalRefreshed);
         loading=true;
         $scope.pizzasInCart = [];
         buttonApi.getPizzas()
