@@ -20,8 +20,10 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.toppingSelect = toppingSelect;
     $scope.addToCart = addToCart;
     $scope.addPizzaToCart = addPizzaToCart;
+    $scope.addCrustToCart = addCrustToCart;
     $scope.refreshCart=refreshCart;
     $scope.getPrice = getPrice;
+    $scope.checkOut = checkOut;
     $scope.refreshPizzaCart = refreshPizzaCart;
     $scope.deleteItem = deleteItem;
     $scope.logout = logout;
@@ -55,6 +57,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.totalPrices=[0,0,0,0,0,0];
     $scope.currentPizzaPrices=[0,0,0,0,0,0];
     $scope.selection=[];
+    $scope.totalRefreshed=0;
 
 
 
@@ -216,7 +219,16 @@ function ButtonCtrl($q, $scope,buttonApi){
         )
     }
 
+    function checkOut(){
+        buttonApi.checkOut()
+            .success(function(data) {
+                refreshCart();
+                refreshPizzaCart();
+            })
+    }
+
     function refreshCart(){
+        console.log("droinks and sides");
         loading=true;
         $scope.drinksItemsInCart = [];
         $scope.sidesItemsInCart = [];
@@ -263,12 +275,14 @@ function ButtonCtrl($q, $scope,buttonApi){
     }
 
     function refreshPizzaCart(){
-        console.log("refreshpizza cart");
+        $scope.totalRefreshed++;
+        console.log($scope.totalRefreshed);
         loading=true;
         $scope.pizzasInCart = [];
         buttonApi.getPizzas()
             .success(function(pizzasInDB){
                 //Do Stuff
+                $scope.totalPrices=[0,0,0,0,0,0];
                 var tempId = pizzasInDB[0].pizzaID;
                 var tempSize = pizzasInDB[0].type;
                 var pizzaShell = {};
@@ -325,6 +339,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     }
 
     function addToCart(itemname, itemtype, pizzaID, toRefresh) {
+
         buttonApi.addToCart(itemname, itemtype, pizzaID)
             .success(function(){
                 if(pizzaID==0){
@@ -332,17 +347,32 @@ function ButtonCtrl($q, $scope,buttonApi){
                 }
                 if (toRefresh){
                     refreshPizzaCart();
+
                 }
 
             })
 
 
     }
+    function addCrustToCart() {
+
+        buttonApi.addToCart($scope.crusttype, $scope.pizzaSize, $scope.pizzaID)
+            .success(function(){
+                addPizzaToCart();
+
+
+            })
+
+
+    }
+
+
+
     function addPizzaToCart(){
 
         var toRefresh = false;
 
-        addToCart($scope.crusttype, $scope.pizzaSize, $scope.pizzaID, toRefresh);
+        //addToCart($scope.crusttype, $scope.pizzaSize, $scope.pizzaID, toRefresh);
         addToCart($scope.currentsauce, 'sauce', $scope.pizzaID, toRefresh);
         if ($scope.currenttopping.length == 0){
             toRefresh = true;
@@ -503,6 +533,10 @@ function buttonApi($http,apiUrl){
         },
         logout: function(){
             var url = apiUrl+'/logout';
+            return $http.get(url);
+        },
+        checkOut: function(){
+            var url = apiUrl+'/checkOut';
             return $http.get(url);
         }
 
