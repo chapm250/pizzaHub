@@ -55,6 +55,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.sidesItemsInCart=[];
     $scope.pizzasInCart=[];
     $scope.totalPrices=[0,0,0,0,0,0];
+    $scope.dsTotalPrices=[0,0,0,0,0,0];
     $scope.currentPizzaPrices=[0,0,0,0,0,0];
     $scope.selection=[];
 
@@ -226,7 +227,7 @@ function ButtonCtrl($q, $scope,buttonApi){
         $scope.sidesItemsInCart = [];
         buttonApi.getCart("Drinks")
             .success(function(data){
-                $scope.totalPrices=[0,0,0,0,0,0];
+                $scope.dsTotalPrices=[0,0,0,0,0,0];
 
                 for(i = 0; i < data.length; i++) {
                     if((data[i].type == "drank")){
@@ -239,12 +240,12 @@ function ButtonCtrl($q, $scope,buttonApi){
                         //    counter++;
                         //})
 
-                        $scope.totalPrices[0] += data[i].quantity*data[i].Dominos;
-                        $scope.totalPrices[1] += data[i].quantity*data[i].PizzaHut;
-                        $scope.totalPrices[2] += data[i].quantity*data[i].PapaJohns;
-                        $scope.totalPrices[3] += data[i].quantity*data[i].Caseys;
-                        $scope.totalPrices[4] += data[i].quantity*data[i].HungryHowie;
-                        $scope.totalPrices[5] += data[i].quantity*data[i].PizzaRanch;
+                        $scope.dsTotalPrices[0] += data[i].quantity*data[i].Dominos;
+                        $scope.dsTotalPrices[1] += data[i].quantity*data[i].PizzaHut;
+                        $scope.dsTotalPrices[2] += data[i].quantity*data[i].PapaJohns;
+                        $scope.dsTotalPrices[3] += data[i].quantity*data[i].Caseys;
+                        $scope.dsTotalPrices[4] += data[i].quantity*data[i].HungryHowie;
+                        $scope.dsTotalPrices[5] += data[i].quantity*data[i].PizzaRanch;
                         $scope.drinksItemsInCart.push(data[i]);
                     }
                 }
@@ -254,7 +255,13 @@ function ButtonCtrl($q, $scope,buttonApi){
             .success(function(data){
                 for(i = 0; i < data.length; i++) {
                     if((data[i].type == "side")){
-                        $scope.sidesItemsInCart.push(data[i]);
+                        $scope.dsTotalPrices[0] += data[i].quantity*data[i].Dominos;
+                        $scope.dsTotalPrices[1] += data[i].quantity*data[i].PizzaHut;
+                        $scope.dsTotalPrices[2] += data[i].quantity*data[i].PapaJohns;
+                        $scope.dsTotalPrices[3] += data[i].quantity*data[i].Caseys;
+                        $scope.dsTotalPrices[4] += data[i].quantity*data[i].HungryHowie;
+                        $scope.dsTotalPrices[5] += data[i].quantity*data[i].PizzaRanch;
+                        $scope.dssidesItemsInCart.push(data[i]);
 
                     }
 
@@ -271,6 +278,9 @@ function ButtonCtrl($q, $scope,buttonApi){
             .success(function(pizzasInDB){
                 //Do Stuff
                 $scope.totalPrices=[0,0,0,0,0,0];
+                for(i = 0; i < 6; i++){
+                    $scope.totalPrices[i]+=$scope.dsTotalPrices[i];
+                }
                 var tempId = pizzasInDB[0].pizzaID;
                 var tempSize = pizzasInDB[0].type;
                 var pizzaShell = {};
