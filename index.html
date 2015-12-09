@@ -97,7 +97,12 @@
                         </ul>
 
                         <h3>Current Pizza Selection</h3>
-                        <img scr="/crust.png">
+                        <div>
+                            <label ng-show = "crustarray[2] = true"><img id="thick" src="http://www.pizzahut.com/assets/w/evo_pb/crust/crust_pan_NoFinish.png" alt="hehe" height="300" width="300"></label>
+                            <!--<label ng-show = "crustarray[2] = true"><img id="thick" src="http://www.pizzahut.com/assets/w/evo_pb/crust/crust_pan_NoFinish.png" alt="hehe" height="300" width="300"></label>-->
+
+                        </div>
+                        <br>
 
 
                         <!--<label>{{sizecrust}}</label>  <label>Crust Prices: Dominos=${{selection[0].Dominos}} PizzaHut=${{selection[0].PizzaHut}} PapaJohns=${{selection[0].PapaJohns}}  Caseys=${{selection[0].Caseys}}  HungryHowies=${{selection[0].HungryHowies}}  PizzaRanch=${{selection[0].PizzaRanch}} </label>-->
@@ -302,18 +307,18 @@
                         <label ng-hide = "side.PizzaHut == null">PizzaHut= ${{side.PizzaHut}}</label>
                         <label ng-hide = "side.PapaJohns == null">PapaJohns= ${{side.PapaJohns}}</label>
                         <label ng-hide = "side.Caseys == null">Caseys= ${{side.Caseys}}</label>
-                        <label ng-hide = "side.HungryHowie == null">HungryHowie's= ${{side.HungryHowie}}</label>
+                        <label ng-hide = "side.HungryHowie == null">HungryHowie= ${{side.HungryHowie}}</label>
                         <label ng-hide = "side.PizzaRanch == null">PizzaRanch= ${{side.PizzaRanch}}</label>
                     </tr>
                 </table>
             </div>
             <h1>Total</h1>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[0] == 0 || totalPrices[0].indexOf('N/A') ==0 "><img src="http://blogs-images.forbes.com/stevedenning/files/2011/03/256px-Dominos_pizza_logo.svg_.png" alt="Dominos" height="60" width="60"> ${{totalPrices[0].toFixed(2)}}</button>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[1] == 0 || totalPrices[1].indexOf('N/A') ==0 "><img src="https://static-s.aa-cdn.net/img/ios/881318556/0a98043e59bf8e74486ddfcf014cb328?v=1" alt="PizzaHut" height="60" width="60"> ${{totalPrices[1].toFixed(2)}}</button>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[2] == 0 || totalPrices[2].indexOf('N/A') ==0 "><img src="http://file.answcdn.com/answ-cld/image/upload/v1/tk/brand_image/2957f6a1/2d12d3fa2ffffd5ce43b72fb89f441b2c25ae451.png" alt="PapaJohns" height="60" width="60">  ${{totalPrices[2].toFixed(2)}}</button>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[3] == 0 || totalPrices[3].indexOf('N/A') ==0 "><img src="http://wac.450f.edgecastcdn.net/80450F/khak.com/files/2014/11/caseys.jpg" alt="Casey's" height="60" width="60">  ${{totalPrices[3].toFixed(2)}}</button>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[4] == 0 || totalPrices[4].indexOf('N/A') ==0 "><img src="http://www.visitsouthwalton.com/sites/default/master/files/profiles/photos/profile_logo/Howie_Logo_20100.png" alt="HungryHowie's" height="60" width="60">  ${{totalPrices[5].toFixed(2)}}</button>
-            <button ng-click="checkOut()" ng-hide = "totalPrices[5] == 0 || totalPrices[5].indexOf('N/A') ==0 "><img src="https://www.rabezauction.com/images/Pizza-Ranch-Lg1.jpg" alt="PizzaRanch" height="60" width="60">  ${{totalPrices[5].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[0].indexOf('N/A') > -1 "><img src="http://blogs-images.forbes.com/stevedenning/files/2011/03/256px-Dominos_pizza_logo.svg_.png" alt="Dominos" height="60" width="60"> ${{totalPrices[0].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[1].indexOf('N/A') > -1 "><img src="https://static-s.aa-cdn.net/img/ios/881318556/0a98043e59bf8e74486ddfcf014cb328?v=1" alt="PizzaHut" height="60" width="60"> ${{totalPrices[1].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[2].indexOf('N/A') > -1 "><img src="http://file.answcdn.com/answ-cld/image/upload/v1/tk/brand_image/2957f6a1/2d12d3fa2ffffd5ce43b72fb89f441b2c25ae451.png" alt="PapaJohns" height="60" width="60">  ${{totalPrices[2].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[3].indexOf('N/A') > -1 "><img src="http://wac.450f.edgecastcdn.net/80450F/khak.com/files/2014/11/caseys.jpg" alt="Casey's" height="60" width="60">  ${{totalPrices[3].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[4].indexOf('N/A') > -1 "><img src="http://www.visitsouthwalton.com/sites/default/master/files/profiles/photos/profile_logo/Howie_Logo_20100.png" alt="HungryHowie's" height="60" width="60">  ${{totalPrices[4].toFixed(2)}}</button>
+            <button ng-click="checkOut()" ng-hide = "totalPrices[5].indexOf('N/A') > -1 "><img src="https://www.rabezauction.com/images/Pizza-Ranch-Lg1.jpg" alt="PizzaRanch" height="60" width="60">  ${{totalPrices[5].toFixed(2)}}</button>
 
 
         </div>

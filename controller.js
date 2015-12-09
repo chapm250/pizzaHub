@@ -239,7 +239,24 @@ function ButtonCtrl($q, $scope,buttonApi){
                         //    }
                         //    counter++;
                         //})
-
+                        if (data[i].Dominos == null) {
+                            $scope.dsTotalPrices[0] += "N/A";
+                        }
+                        if (data[i].PizzaHut == null) {
+                            $scope.dsTotalPrices[1] += "N/A";
+                        }
+                        if (data[i].PapaJohns == null) {
+                            $scope.dsTotalPrices[2] += "N/A";
+                        }
+                        if (data[i].Caseys == null) {
+                            $scope.dsTotalPrices[3] += "N/A";
+                        }
+                        if (data[i].HungryHowie == null) {
+                            $scope.dsTotalPrices[4] += "N/A";
+                        }
+                        if (data[i].PizzaRanch == null) {
+                            $scope.dsTotalPrices[5] += "N/A";
+                        }
                         $scope.dsTotalPrices[0] += data[i].quantity*data[i].Dominos;
                         $scope.dsTotalPrices[1] += data[i].quantity*data[i].PizzaHut;
                         $scope.dsTotalPrices[2] += data[i].quantity*data[i].PapaJohns;
@@ -253,15 +270,35 @@ function ButtonCtrl($q, $scope,buttonApi){
             });
         buttonApi.getCart("sides")
             .success(function(data){
+                //$scope.totalPrices=[0,0,0,0,0,0];
+
                 for(i = 0; i < data.length; i++) {
                     if((data[i].type == "side")){
+                        if (data[i].Dominos == null) {
+                            $scope.dsTotalPrices[0] += "N/A";
+                        }
+                        if (data[i].PizzaHut == null) {
+                            $scope.dsTotalPrices[1] += "N/A";
+                        }
+                        if (data[i].PapaJohns == null) {
+                            $scope.dsTotalPrices[2] += "N/A";
+                        }
+                        if (data[i].Caseys == null) {
+                            $scope.dsTotalPrices[3] += "N/A";
+                        }
+                        if (data[i].HungryHowie == null) {
+                            $scope.dsTotalPrices[4] += "N/A";
+                        }
+                        if (data[i].PizzaRanch == null) {
+                            $scope.dsTotalPrices[5] += "N/A";
+                        }
                         $scope.dsTotalPrices[0] += data[i].quantity*data[i].Dominos;
                         $scope.dsTotalPrices[1] += data[i].quantity*data[i].PizzaHut;
                         $scope.dsTotalPrices[2] += data[i].quantity*data[i].PapaJohns;
                         $scope.dsTotalPrices[3] += data[i].quantity*data[i].Caseys;
                         $scope.dsTotalPrices[4] += data[i].quantity*data[i].HungryHowie;
                         $scope.dsTotalPrices[5] += data[i].quantity*data[i].PizzaRanch;
-                        $scope.dssidesItemsInCart.push(data[i]);
+                        $scope.sidesItemsInCart.push(data[i]);
 
                     }
 
@@ -272,6 +309,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     }
 
     function refreshPizzaCart(){
+
         loading=true;
         $scope.pizzasInCart = [];
         buttonApi.getPizzas()
@@ -281,6 +319,8 @@ function ButtonCtrl($q, $scope,buttonApi){
                 for(i = 0; i < 6; i++){
                     $scope.totalPrices[i]+=$scope.dsTotalPrices[i];
                 }
+                console.log($scope.totalPrices);
+                console.log($scope.totalPrices[1].indexOf('N/A'));
                 var tempId = pizzasInDB[0].pizzaID;
                 var tempSize = pizzasInDB[0].type;
                 var pizzaShell = {};
@@ -332,6 +372,7 @@ function ButtonCtrl($q, $scope,buttonApi){
                             getPrice($scope.pizzasInCart[i].toppings[j], $scope.pizzasInCart[i].size, i);
                     }
                 }
+
                 loading=false;
             });
     }
@@ -462,7 +503,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     refreshCart();
     refreshPizzaCart();
     findLastPizzaID();
-    getSelectionPrices("thick crust", "14in", 0);
+    //getSelectionPrices("thick crust", "14in", 0);
 
 
 }
