@@ -1,0 +1,31 @@
+.Pizza {
+    position: relative;
+}
+
+.Pizza .crust {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index : 0;
+}
+
+.Pizza .sauce{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.Pizza .cheese{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.Pizza .meat{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.Pizza .veg{
+    position: absolute;
+    top: 0;
+    left: 0;
+}

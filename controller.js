@@ -47,6 +47,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.password="";
     $scope.meatArray=[];
     $scope.nonmeatArray=[];
+    $scope.currenttoppingNic = [];
     $scope.crustArray=[];
     $scope.sauceArray=[];
     $scope.drinksArray=[];
@@ -81,6 +82,7 @@ function ButtonCtrl($q, $scope,buttonApi){
 
     function cheeseSelect(cheese){
        $scope.currentcheese = cheese;
+        console.log($scope.currentcheese);
     }
     function sauceSelect(sauce){
         $scope.currentsauce = sauce + " sauce";
@@ -185,11 +187,13 @@ function ButtonCtrl($q, $scope,buttonApi){
 
         counter = 1;
         $scope.currenttopping = [];
+        $scope.currenttoppingNic = [];
         $scope.selection=[$scope.selection[0]];
         angular.forEach($scope.meatArray, function(meat){
             if (meat.selected == true){
 
                 $scope.currenttopping.push({name: meat.property, id: counter});
+                $scope.currenttoppingNic.push(meat.property);
                 getSelectionPrices(meat.property, $scope.pizzaSize,counter);
                 counter++;
             }
@@ -197,6 +201,7 @@ function ButtonCtrl($q, $scope,buttonApi){
         angular.forEach($scope.nonmeatArray, function(nonmeat){
             if (nonmeat.selected == true){
                 $scope.currenttopping.push({name: nonmeat.property, id: counter});
+                $scope.currenttoppingNic.push(nonmeat.property);
                 getSelectionPrices(nonmeat.property, $scope.pizzaSize,counter);
                 counter++;
             }
