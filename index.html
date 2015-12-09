@@ -275,17 +275,20 @@
                 <table  class ="table" style="">
 
                     <tr >
-                        <td> <button ng-click="deleteItem(drink.itemname, 0)" class = "glyphicon glyphicon-remove" style="background-color: red"> </button>  {{drink.quantity}} {{drink.itemname}}s</td>
+                        <label> <button ng-click="deleteItem(drink.itemname, 0)" class = "glyphicon glyphicon-remove" style="background-color: red"> </button>  {{drink.quantity}} {{drink.itemname}}s</label>
+                        <br>
 
                     </tr>
                     <tr>
+                        <!--<td>-->
                         <!--<td>Dominos = ${{drink.Dominos}} ${{drink.PizzaHut}} ${{drink.PapaJohn}} ${{drink.Caseys}} ${{drink.HungryHowie}} ${{drink.PizzaRanch}}</td>-->
-                        <label ng-hide = "drink.Dominos == null">Dominos= ${{drink.Dominos}}</label>
-                        <label ng-hide = "drink.PizzaHut == null">PizzaHut= ${{drink.PizzaHut}}</label>
-                        <label ng-hide = "drink.PapaJohns == null">PapaJohns= ${{drink.PapaJohns}}</label>
-                        <label ng-hide = "drink.Caseys == null">Caseys= ${{drink.Caseys}}</label>
-                        <label ng-hide = "drink.HungryHowie == null">HungryHowie's= ${{drink.HungryHowie}}</label>
-                        <label ng-hide = "drink.PizzaRanch == null">PizzaRanch= ${{drink.PizzaRanch}}</label>
+                        <label style="font-weight: normal" ng-hide = "drink.Dominos == null">Dominos= ${{drink.Dominos}}</label>
+                        <label style="font-weight: normal" ng-hide = "drink.PizzaHut == null">PizzaHut= ${{drink.PizzaHut}}</label>
+                        <label style="font-weight: normal" ng-hide = "drink.PapaJohns == null">PapaJohns= ${{drink.PapaJohns}}</label>
+                        <label style="font-weight: normal" ng-hide = "drink.Caseys == null">Caseys= ${{drink.Caseys}}</label>
+                        <label style="font-weight: normal"  ng-hide = "drink.HungryHowie == null">HungryHowie's= ${{drink.HungryHowie}}</label>
+                        <label style="font-weight: normal" ng-hide = "drink.PizzaRanch == null">PizzaRanch= ${{drink.PizzaRanch}}</label>
+                        <!--</td>-->
 
                     </tr>
 
