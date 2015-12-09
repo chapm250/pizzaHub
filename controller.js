@@ -25,10 +25,11 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.refreshPizzaCart = refreshPizzaCart;
     $scope.deleteItem = deleteItem;
     $scope.logout = logout;
+    //$scope.currentTotal = currentTotal;
     //constants
-    $scope.sizecrust="Choose your Crust";
-    $scope.crusttype="";
-    $scope.pizzaSize="";
+    $scope.sizecrust="14in thick crust";
+    $scope.crusttype="thick crust";
+    $scope.pizzaSize="14in";
     $scope.currentcheese="Choose your Cheese";
     $scope.currentsauce="Choose your Sauce";
     $scope.currenttopping = [];
@@ -52,6 +53,10 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.sidesItemsInCart=[];
     $scope.pizzasInCart=[];
     $scope.totalPrices=[0,0,0,0,0,0];
+    $scope.currentPizzaPrices=[0,0,0,0,0,0];
+    $scope.selection=[];
+
+
 
     //$q.defer;
 
@@ -74,11 +79,14 @@ function ButtonCtrl($q, $scope,buttonApi){
     }
     function sauceSelect(sauce){
         $scope.currentsauce = sauce + " sauce";
+        //updatePizzaSelection();
     }
 
     function crustSelect(id){
         $scope.crusttype = id;
         $scope.pizzaSize = $scope.sizecrust.substring(0,4);
+
+        getSelectionPrices(id,$scope.pizzaSize,0);
 
     }
 
@@ -116,6 +124,18 @@ function ButtonCtrl($q, $scope,buttonApi){
     function isLoading(){
         return loading;
     }
+
+
+    //function updatePizzaSelection(){
+    //   // buttonApi.getPrice()
+    //    $scope.selection.crust = $scope.crusttype;
+    //    $scope.selection.cheese = $scope.currentcheese;
+    //    $scope.selection.sauce = $scope.currentsauce;
+    //    $scope.selection.toppings = $scope.currenttopping;
+    //
+    //
+    //}
+
 
     function getShit(){
         loading = true;
@@ -165,19 +185,26 @@ function ButtonCtrl($q, $scope,buttonApi){
         )
     }
 
-    function toppingSelect(toppingName){
+    function toppingSelect(){
 
+        counter = 1;
         $scope.currenttopping = [];
+        $scope.selection=[$scope.selection[0]];
         angular.forEach($scope.meatArray, function(meat){
             if (meat.selected == true){
-                $scope.currenttopping.push(meat.property);
+
+                $scope.currenttopping.push({name: meat.property, id: counter});
+                getSelectionPrices(meat.property, $scope.pizzaSize,counter);
+                counter++;
             }
         });
         angular.forEach($scope.nonmeatArray, function(nonmeat){
             if (nonmeat.selected == true){
-                $scope.currenttopping.push(nonmeat.property);
+                $scope.currenttopping.push({name: nonmeat.property, id: counter});
+                getSelectionPrices(nonmeat.property, $scope.pizzaSize,counter);
             }
         });
+        //updatePizzaSelection();
     }
 
     function deleteItem(itemname, pizzaID){
@@ -325,7 +352,7 @@ function ButtonCtrl($q, $scope,buttonApi){
             if (i == $scope.currenttopping.length-1){
                 toRefresh = true;
             }
-            addToCart($scope.currenttopping[i], $scope.pizzaSize, $scope.pizzaID, toRefresh);
+            addToCart($scope.currenttopping[i].name, $scope.pizzaSize, $scope.pizzaID, toRefresh);
         }
         $scope.pizzaID++;
 
@@ -338,6 +365,40 @@ function ButtonCtrl($q, $scope,buttonApi){
         $scope.currenttopping = [];
         //refreshPizzaCart();
 
+    }
+
+    //function currentTotal(store){
+    //    sum = 0;
+    //    for(i = 0; i < $scope.selection.length; i++){
+    //        sum += $scope.selection[i].Dominos;
+    //    }
+    //    console.log("sum =  " + sum);
+    //    return sum;
+    //}
+
+    function getSelectionPrices(itemname, size, spot){
+        buttonApi.getPrice(itemname, size)
+            .success(function(prices){
+                $scope.selection[spot] = prices;
+                $scope.currentPizzaPrices=[0,0,0,0,0,0];
+                for(i = 0; i < $scope.selection.length; i++){
+                    counter=0;
+
+                    angular.forEach($scope.selection[i], function(store){
+
+
+                        if(store == null || typeof $scope.currentPizzaPrices[counter] === 'string'){
+                            $scope.currentPizzaPrices[counter] = "N/A";
+                            counter++;
+                        } else {
+                            $scope.currentPizzaPrices[counter] += store;
+                            counter++;
+                        }
+                    })
+                }
+
+
+            })
     }
 
 
@@ -382,6 +443,7 @@ function ButtonCtrl($q, $scope,buttonApi){
     refreshCart();
     refreshPizzaCart();
     findLastPizzaID();
+    getSelectionPrices("thick crust", "14in", 0);
 
 
 }

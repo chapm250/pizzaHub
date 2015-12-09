@@ -97,7 +97,10 @@
                     </ul>
 
                     <h3>Current Pizza Selection</h3>
-                    <label>{{sizecrust}}</label>
+                    <label>{{sizecrust}}</label>  <label>Crust Prices: Dominos=${{selection[0].Dominos}} PizzaHut=${{selection[0].PizzaHut}} PapaJohns=${{selection[0].PapaJohns}}  Caseys=${{selection[0].Caseys}}  HungryHowies=${{selection[0].HungryHowies}}  PizzaRanch=${{selection[0].PizzaRanch}} </label>
+                    <div>
+
+                    </div>
                     <br>
                     <label style="padding-left: 10px">{{currentcheese}}</label>
                     <br>
@@ -105,8 +108,15 @@
                     <br>
                     <h5><b>Toppings: </b></h5>
                     <div ng-repeat="topping in currenttopping">
-                        <label style="padding-left: 10px">{{topping}}</label>
+
+                        <label style="padding-left: 10px">{{topping.name}} prices:  Dominos=${{selection[topping.id].Dominos}} PizzaHut=${{selection[topping.id].PizzaHut}} PapaJohns=${{selection[topping.id].PapaJohns}} Caseys=${{selection[topping.id].Caseys}} HungrieHowies=${{selection[topping.id].HungryHowies}} PizzaRanch=${{selection[topping.id].PizzaRanch}}</label>
                     </div>
+
+
+                    <br>
+                    <br>
+                    <label>Total Pizza Cost: Dominos=${{currentPizzaPrices[0]}} PizzaHut=${{currentPizzaPrices[1]}} PapaJohns=${{currentPizzaPrices[2]}} Caseys=${{currentPizzaPrices[3]}} HungryHowies=${{currentPizzaPrices[4]}} PizzaRanch=${{currentPizzaPrices[5]}}</label>
+                    <br>
                     <button style="left:100px" ng-click="addPizzaToCart()" >Add To Cart</button>
 
                     <div class="tab-content">
@@ -170,7 +180,7 @@
                                 <h3>Meaty toppings ;)</h3>
                                 <div ng-repeat="meat in meatArray">
                                     <div class="checkbox" >
-                                        <label><input type="checkbox" ng-model="meat.selected" ng-click="toppingSelect(meat.property);" name="{{meat.property}}">{{meat.property}}</label>
+                                        <label><input type="checkbox" ng-model="meat.selected" ng-click="toppingSelect();" name="{{meat.property}}">{{meat.property}}</label>
                                     </div>
                                 </div>
 
@@ -179,7 +189,7 @@
                                 <h3>Non Meaty toppings</h3>
                                 <div ng-repeat="nonmeat in nonmeatArray">
                                     <div class="checkbox" >
-                                        <label><input type="checkbox" ng-model="nonmeat.selected" ng-click="toppingSelect(nonmeat.property);" name="{{nonmeat.property}}">{{nonmeat.property}}</label>
+                                        <label><input type="checkbox" ng-model="nonmeat.selected" ng-click="toppingSelect();" name="{{nonmeat.property}}">{{nonmeat.property}}</label>
                                     </div>
                                 </div>
 
@@ -236,10 +246,7 @@
 
          <table  class ="table" style="">
 
-            <tr >
-                <td> <button ng-click="deleteItem(drink.itemname, 0)" class = "glyphicon glyphicon-remove" style="background-color: red"> </button>  {{drink.quantity}} {{drink.itemname}}s</td>
 
-            </tr>
             <tr>
                 <!--<td>Dominos = ${{drink.Dominos}} ${{drink.PizzaHut}} ${{drink.PapaJohn}} ${{drink.Caseys}} ${{drink.HungryHowie}} ${{drink.PizzaRanch}}</td>-->
                 <label ng-hide = "drink.Dominos == null">Dominos= ${{drink.Dominos}}</label>
@@ -250,6 +257,11 @@
                 <label ng-hide = "drink.PizzaRanch == null">PizzaRanch= ${{drink.PizzaRanch}}</label>
 
             </tr>
+
+             <tr >
+                 <td> <button ng-click="deleteItem(drink.itemname, 0)" class = "glyphicon glyphicon-remove" style="background-color: red"> </button>  {{drink.quantity}} {{drink.itemname}}s</td>
+
+             </tr>
 
             </table>
 
@@ -282,6 +294,7 @@
         <label ng-hide = "totalPrices[4] == 0 || totalPrices[4].indexOf('N/A') ==0 ">HungryHowie's= ${{totalPrices[4]}}</label>
         <label ng-hide = "totalPrices[5] == 0 || totalPrices[5].indexOf('N/A') ==0 ">PizzaRanch= ${{totalPrices[5]}}</label>
 
+        <h3>Choose Where to Check Out</h3>
 
     </div>
 
