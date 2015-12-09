@@ -42,6 +42,17 @@ app.get("/getToppings", function(req, res){
     })
 });
 
+app.get("/checkOut", function(req, res){
+    var sql = 'truncate Josh.shoppingcartbase'
+    connection.query(sql, function(err, rows, fields){
+        if(err){console.log("checkOut sucks");
+            console.log(err)
+        } else {
+            res.send(err)
+        }
+    })
+});
+
 app.get("/getSauce", function(req, res){
     var sql = 'select saucename from Josh.sauces'
     connection.query(sql, function(err, rows, fields){
