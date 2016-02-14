@@ -2,7 +2,7 @@
 angular.module('buttons',[])
     .controller('buttonCtrl',ButtonCtrl)
     .factory('buttonApi',buttonApi)
-    .constant('apiUrl','http://localhost:1338'); //CHANGE for the lab!
+    .constant('apiUrl','http://localhost:1337'); //CHANGE for the lab!
 
 
 function ButtonCtrl($q, $scope,buttonApi){
@@ -43,8 +43,8 @@ function ButtonCtrl($q, $scope,buttonApi){
     $scope.newaddress="";
     $scope.newphone="";
     $scope.newcard="";
-    $scope.username="snuffy";
-    $scope.password="";
+    $scope.username="Josh";
+    $scope.password="job";
     $scope.meatArray=[];
     $scope.nonmeatArray=[];
     $scope.currenttoppingNic = [];

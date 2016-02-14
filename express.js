@@ -3,10 +3,10 @@ var express=require('express'),
     mysql=require('mysql'),
     credentials=require('./credentials.json'),
     app = express(),
-    port =  1338;
+    port =  1337;
     async = require('async');
 
-credentials.host='ids'; //setup database credentials
+credentials.host='localhost'; //setup database credentials
 
 var connection = mysql.createConnection(credentials); // setup the connection
 
@@ -18,7 +18,7 @@ app.use(express.static(__dirname ));
 app.get("/login",function(req,res){
     var username = req.param('username');
     var password = req.param('password');
-    var sql = 'select * from Josh.pizzausers where name = "' + username + '"and password = "' + password + '"';
+    var sql = 'select * from pizza.pizzausers where name = "' + username + '"and password = "' + password + '"';
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("We have an error:");
             console.log(err);
@@ -32,7 +32,7 @@ app.get("/login",function(req,res){
     })});
 
 app.get("/getToppings", function(req, res){
-    var sql = 'select property, type, false as selected from Josh.10in'
+    var sql = 'select property, type, false as selected from pizza.10in'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("we have and error:");
         console.log(err);
@@ -43,7 +43,7 @@ app.get("/getToppings", function(req, res){
 });
 
 app.get("/checkOut", function(req, res){
-    var sql = 'truncate Josh.shoppingcartbase'
+    var sql = 'truncate pizza.shoppingcartbase'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("checkOut sucks");
             console.log(err)
@@ -54,7 +54,7 @@ app.get("/checkOut", function(req, res){
 });
 
 app.get("/getSauce", function(req, res){
-    var sql = 'select saucename from Josh.sauces'
+    var sql = 'select saucename from pizza.sauces'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("we have and error:");
             console.log(err);
@@ -65,7 +65,7 @@ app.get("/getSauce", function(req, res){
 });
 
 app.get("/getDrank", function(req, res){
-    var sql = 'select property from Josh.Drinks'
+    var sql = 'select property from pizza.Drinks'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("we have and error:");
             console.log(err);
@@ -76,7 +76,7 @@ app.get("/getDrank", function(req, res){
 });
 
 app.get("/getPizzas", function(req, res){
-    var sql = 'select * from Josh.shoppingcartbase where pizzaID!=0'
+    var sql = 'select * from pizza.shoppingcartbase where pizzaID!=0'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("we have and error:");
             console.log(err);
@@ -88,7 +88,7 @@ app.get("/getPizzas", function(req, res){
 
 app.get("/getCart", function(req, res){
     var tablename = req.param('tablename')
-    var sql = 'select * from Josh.shoppingcartbase left join Josh.' + tablename+ ' on Josh.'+ tablename + '.property = Josh.shoppingcartbase.itemname '
+    var sql = 'select * from pizza.shoppingcartbase left join pizza.' + tablename+ ' on pizza.'+ tablename + '.property = pizza.shoppingcartbase.itemname '
     connection.query(sql, function(err, rows, fields){
         console.log(sql)
         if(err){console.log("we have and error:");
@@ -108,7 +108,7 @@ app.get("/addToCart", function(req, res){
     var exists = false;
     async.series([
         function(callback){
-            var sql = 'select * from Josh.shoppingcartbase where itemname ="' + itemname+'"';
+            var sql = 'select * from pizza.shoppingcartbase where itemname ="' + itemname+'"';
             connection.query(sql, function(err, rows, fields){
                 if(err){console.log("we have an error:");
                 console.log("inselect" + sql);
@@ -122,9 +122,9 @@ app.get("/addToCart", function(req, res){
         },
         function (callback){
             if(exists && (pizzaID==0)){
-                var sql = 'update Josh.shoppingcartbase set quantity = quantity + 1 where itemname = "' + itemname +'"';
+                var sql = 'update pizza.shoppingcartbase set quantity = quantity + 1 where itemname = "' + itemname +'"';
             } else {
-                var sql = 'insert into Josh.shoppingcartbase (itemname, quantity, pizzaID, type) values ("' + itemname + '", 1, '+  pizzaID +  ', "'+ itemtype+'")';
+                var sql = 'insert into pizza.shoppingcartbase (itemname, quantity, pizzaID, type) values ("' + itemname + '", 1, '+  pizzaID +  ', "'+ itemtype+'")';
             }
             connection.query(sql, function(err, rows, fields){
                 if(err){console.log("we have an error:");
@@ -141,9 +141,9 @@ app.get("/deleteItem", function(req, res){
     var itemname = req.param('itemname');
     var pizzaID = req.param('pizzaID')
     if(pizzaID > 0){
-        var sql = 'delete from Josh.shoppingcartbase where pizzaID = ' + pizzaID;
+        var sql = 'delete from pizza.shoppingcartbase where pizzaID = ' + pizzaID;
     } else {
-        var sql = 'delete from Josh.shoppingcartbase where itemname = "' + itemname + '"'
+        var sql = 'delete from pizza.shoppingcartbase where itemname = "' + itemname + '"'
     }
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("delete sucks");
@@ -154,7 +154,7 @@ app.get("/deleteItem", function(req, res){
 });
 
 app.get("/getSide", function(req, res){
-    var sql = 'select property from Josh.sides'
+    var sql = 'select property from pizza.sides'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("we have and error:");
             console.log(err);
@@ -168,7 +168,7 @@ app.get("/getPrice", function(req, res){
     var itemname = req.param('itemname');
     var tablename = req.param('tablename');
 
-    var sql = 'select Dominos, PizzaHut, PapaJohns, Caseys, HungryHowies, PizzaRanch from Josh.'+ tablename+' where property = "' + itemname + '"';
+    var sql = 'select Dominos, PizzaHut, PapaJohns, Caseys, HungryHowies, PizzaRanch from pizza.'+ tablename+' where property = "' + itemname + '"';
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("fucking error:");
         console.log(err)
@@ -179,7 +179,7 @@ app.get("/getPrice", function(req, res){
 })
 
 app.get("/logout", function(req, res){
-    var sql = 'truncate Josh.shoppingcartbase'
+    var sql = 'truncate pizza.shoppingcartbase'
     connection.query(sql, function(err, rows, fields){
         if(err){console.log("fuck logout");
         console.log(err)
@@ -201,7 +201,7 @@ app.get("/register",function(req,res){
 
     async.series([
         function(callback){
-            var sql = 'select user from Josh.pizzaUsers where name=' + username;
+            var sql = 'select user from pizza.pizzausers where name=' + username;
             connection.query(sql, function(err,rows,fields){
                 if(err){console.log("we have and error:");
                     console.log(err);
@@ -217,8 +217,8 @@ app.get("/register",function(req,res){
 
     ]);
 
-    var sql = 'insert into Josh.pizzausers values ("' + username + '", "' + email + '", "' + password + '", "' +
-        address + '", "' + phone + '", "' +  '", "'  + card + '")';
+    var sql = 'insert into pizza.pizzausers values ("' + username + '", "' + email + '", "' + password + '", "' +
+        address + '", "' + phone + '", "' + card + '")';
     connection.query(sql,  function(err, rows, fields){
         if(err){console.log("We have an error:");
             console.log(err);
